@@ -3,7 +3,7 @@ type: index
 title: "Install the Godot addon"
 description: "Copy the addon into your project and enable it — the editor dials the server and reconnects on its own."
 created: 2026-09-19
-updated: 2026-09-23
+updated: 2026-10-10
 ---
 
 # Install the Godot addon
@@ -20,21 +20,29 @@ The addon is the only part of the system that lives inside Godot. It is an
   node, recent command outcomes with timing)
 - registers the debugger plugin that powers live play-session inspection
 
-## Option A: use the bundled project
+## Option A: Godot Asset Library (easiest)
 
-Open the `godot/` folder of the godot-mcp checkout as a project in Godot
-4.4+. Enable the plugin (**Project Settings → Plugins → godot_mcp**). This is
-a minimal project that exists so the addon is loadable and testable.
+The addon is published to the Godot Asset Library as **Godot Editor MCP -
+Addon**. In Godot, open the **Asset Library** (the **AssetLib** tab), search for
+**Godot Editor MCP - Addon**, and **Install** it into your project.
 
-## Option B: copy into your own project (typical)
+## Option B: copy into your own project (from source)
 
 ```bash
 cp -r godot-mcp/godot/addons/godot_mcp /path/to/your/game/addons/
 ```
 
-Then **Project Settings → Plugins → godot_mcp → Enable**.
+## Option C: use the bundled project
 
-The addon checks the editor version on enable and warns below 4.4.
+Open the `godot/` folder of the godot-mcp checkout as a project in Godot
+4.4+. This is a minimal project that exists so the addon is loadable and
+testable.
+
+---
+
+After installing by any method, enable the plugin: **Project Settings →
+Plugins → Godot MCP**. The addon checks the editor version on enable and warns
+below 4.4.
 
 ## Point the addon at your server
 

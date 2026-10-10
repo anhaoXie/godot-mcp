@@ -3,7 +3,7 @@ type: index
 title: "Getting started"
 description: "Install, connect, and drive your first Godot session through MCP."
 created: 2026-09-19
-updated: 2026-09-23
+updated: 2026-10-10
 ---
 
 # Getting started
@@ -11,7 +11,7 @@ updated: 2026-09-23
 Four steps, then you're driving the editor from an agent:
 
 1. [Install the MCP server](getting-started-install.md) — PyPI, Docker, or from source.
-2. [Install the Godot addon](getting-started-addon.md) — copy it into your project, enable it.
+2. [Install the Godot addon](getting-started-addon.md) — from the Godot Asset Library (**Godot Editor MCP - Addon**), or copy it into your project; then enable it.
 3. [Configure your MCP client](getting-started-clients.md) — OpenCode, Claude, or any MCP host.
 4. [Run your first session](getting-started-first-session.md) — inspect, then mutate, then verify.
 
