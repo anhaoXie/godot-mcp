@@ -88,7 +88,7 @@ godot-mcp deliberately ships **no** game vocabulary — no Tower/Enemy/Wave mode
 
 The scaffold (issue #1) is in place: `uv`-managed Python package, the addon under `godot/`, docs, and CI.
 
-- Godot **4.4+** (floor), **validated on 4.7-stable** (the `godot/` project declares `config/features=PackedStringArray("4.7")`); Python **3.11+**; **FastMCP 4.0.1** (PrefectHQ/fastmcp, stable — MCP SDK v2, 2026-07-28 sessionless protocol), managed with **uv**. Always verify Godot APIs against the current docs for the pinned version (via `context7` or `docs.godotengine.org`) rather than from memory — see [[addon]].
+- Godot **4.4+** (floor), **validated on 4.7-stable** (the `godot/` project declares `config/features=PackedStringArray("4.7")`); Python **3.11+**; **FastMCP 4.1.0** (PrefectHQ/fastmcp, stable) on **mcp 2.3.0** — MCP SDK v2, the 2026-07-28 sessionless protocol — managed with **uv**. Always verify Godot APIs against the current docs for the pinned version (via `context7` or `docs.godotengine.org`) rather than from memory — see [[addon]].
 - **Dev commands** (run from repo root, mirrored by `.github/workflows/ci.yml`):
   - `uv sync` — create the venv and install runtime + dev deps.
   - `uv run pytest -q` — full suite; single file `uv run pytest tests/unit/test_smoke.py`; single test `uv run pytest tests/unit/test_smoke.py::test_version_is_calver`.
@@ -136,3 +136,21 @@ Two built-in tools are **off by default** and need an env var to activate — un
 - For implementation tasks: output code blocks only, no prose
 - For process tasks (branching, PRs, test results, summaries): use bullet points, no prose paragraphs.
 - For mandatory reports (e.g. missing tooling, deferred phase scope): append a bullet list after any code output.
+
+## wiki-fabric (opencode)
+## wiki-fabric
+
+This project is connected to a knowledge fabric (`.wiki-overlay.md` declares the namespace; the fabric lives at `~/.local/share/wiki-fabric/` by default — `WIKI_FABRIC_DIR` overrides).
+
+Rules:
+- Before starting a task, run `wf context --task "<task>" --write-receipt` (0 tokens) — it compiles a scoped manifest of relevant claims, patterns, and decisions (project > domain > global precedence) with exclusion reasons. The `--write-receipt` flag persists a delivery record (the manifest + provenance, still on stdout) so outcomes can later be reviewed against what was known: receipts are the default delivery record, zero extra cost.
+- For codebase/architecture questions, run `wf query "<question>"` (0 tokens) before grepping — evidence-backed answers with locators.
+- Health before commit: `wf lint` (0-error gate). Status: `wf status`. Before mutating the repo, confirm it is clean: `git status --porcelain` should be empty — if it lists many uncommitted changes (a dirty restructure), surface that to the user rather than branching/committing over it. If `wf status` reports a STALE installed CLI, run the harness script directly (`bash scripts/wiki-fabric.sh ...`) or `wf update` before relying on `wf` subcommands.
+- After solving a non-trivial problem, log it: `wf log --project <slug> --receipt <receipt-id>` (the receipt id is in the `wf context --write-receipt` stderr output) — receipt ↔ outcome linkage is the delivery/outcome evidence plane mining uses.
+- Never re-ingest a source whose sha256 is already recorded — the CLI skips it and tells you.
+- Promotion is human-gated: `wf` proposes dossiers, only you promote.
+- At session start, run `wf gate` — it aggregates every pending human decision (overdue/stale claims, promotion dossiers awaiting review, newly-proposed domains, open questions awaiting triage) into one report; `wf gate --deliveries` surfaces recent context receipts for delivery-vs-outcome review. Surface whichever are actionable to the user before proceeding. Resolve with: `wf review --auto-reverify`, `wf promote --promote <dossier>`, `wf promote-domains --apply <dossier>`, `wf promote-questions --apply <id>`. If the git hook ran, it already persisted these to `registry/pending-gate.md` — read that instead of running commands (0 tokens).
+- **Procedures on demand:** run `wf skill <name>` before these workflows — `ingest`, `promote`, `refresh`. `wf skill --list` summarizes them. Read the procedure before running the workflow the first time in a session.
+
+CLI: `wf help` | When graphify is also installed: graphify owns code-symbol/call-graph questions; wiki-fabric owns evidence-backed knowledge (`wf query` — claims with doc locators). Prefer `wf context` for task scoping. They complement — neither replaces the other.
+<!-- /wiki-fabric:opencode -->

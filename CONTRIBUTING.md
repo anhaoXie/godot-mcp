@@ -6,7 +6,7 @@ Thanks for your interest in contributing! godot-mcp is a standalone MCP server t
 
 - **Python 3.11+** managed with [uv](https://docs.astral.sh/uv/)
 - **Godot 4.4+** (validated on 4.7-stable)
-- **FastMCP 4.0.1** (stable — GA on MCP SDK v2, the 2026-07-28 sessionless protocol)
+- **FastMCP 4.1.0** on **mcp 2.3.0** (stable — MCP SDK v2, the 2026-07-28 sessionless protocol)
 
 ## Setup
 
