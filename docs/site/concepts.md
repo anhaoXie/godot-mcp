@@ -15,8 +15,12 @@ These are the terms every other page uses. Five ideas cover the whole system.
 Every tool carries **exactly one category tag**. `core` (diagnostics, toolset
 management) is always on; everything else ships **gated off**. The agent turns
 a toolset on with `godot_enable_toolset("scene_edit")`, which writes into a
-server-global enabled set and (since 2026.09.17) emits
-`notifications/tools/list_changed` so clients refresh their cached registry.
+server-global enabled set and announces the change so clients refresh their
+cached registry — `notifications/tools/list_changed`, plus a
+`subscriptions/listen` stream on the `2026-07-28` protocol. Because many clients
+ignore the notification, the enable result also carries the enabled tools'
+names and input schemas, so even a client that never refreshes can call them
+immediately.
 
 Why gate at all? 193 tools in the context window degrade tool-selection and
 burn tokens. The default surface (`core` + `inspection` — 23 tools) is enough
@@ -92,7 +96,7 @@ Results carry structured self-reporting that reads as ground truth:
 `godot_get_server_info` carries `contract_version` (breaking-change counter,
 currently **1**) and `min_compatible_contract`. A client is compatible when
 `min ≤ client ≤ contract`. Additive changes (new tools, optional fields) never
-bump it; removals/renames do. The CalVer build version (`2026.09.30`) moves
+bump it; removals/renames do. The CalVer build version (`2026.10.10`) moves
 every release and is *not* the compatibility signal.
 
 ---

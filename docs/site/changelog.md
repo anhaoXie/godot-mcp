@@ -3,7 +3,7 @@ type: index
 title: "Changelog"
 description: "Release history for godot-mcp."
 created: 2026-09-19
-updated: 2026-09-30
+updated: 2026-10-10
 ---
 
 # Changelog
@@ -11,6 +11,30 @@ updated: 2026-09-30
 Full release notes live on
 [GitHub Releases](https://github.com/hybridindie/godot-mcp/releases). This page
 summarizes the recent ones.
+
+## 2026.10.10 — Gating that works on the sessionless protocol
+
+Toolset gating now works end to end on the `2026-07-28` sessionless protocol, and the
+server no longer trusts the client to refresh its tool list. Surface: **193 tools**
+(unchanged). Additive — `contract_version` stays 1.
+
+- **`subscriptions/listen` served and advertised (#620)** — the server registers a
+  `ListenHandler` (backed by an in-memory bus) on FastMCP's low-level server, so the
+  modern handshake advertises `tools.listChanged: true` and a subscribing client
+  receives `notifications/tools/list_changed` after a toggle. Previously the flag was
+  advertised as `false` on the modern era, so capable clients (Claude Code CLI) never
+  subscribed.
+- **Self-sufficient enable result (#621)** — `godot_enable_toolset` returns each enabled
+  tool's name, description, and input schema, so a client that ignores the notification
+  (most of them) can still call the tools straight from the result.
+- **Fire-and-forget dock push (#624)** — the editor dock's toolset row is pushed with the
+  new `Bridge.notify` (no awaited reply), so a silent addon no longer stalls
+  `enable_toolset`/`disable_toolset` for the 10s request timeout.
+- **MCP stack upgrade (#622)** — FastMCP `4.1.0` / `mcp` `2.3.0`, with
+  `ResultValidationMiddleware` adapted to FastMCP 4.1's `_ToolBodyError` body-error tag so
+  a result-shape mismatch stays a structured `INTERNAL_ERROR`.
+- **Front-door README + cleanup** — the README is now a short landing pointing at this
+  docs site; stale historical docs and non-OpenCode harness artifacts were dropped.
 
 ## 2026.09.30 — Dock feedback, peer-replacement notice, authoring docs
 
