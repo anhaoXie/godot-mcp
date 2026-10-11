@@ -19,12 +19,16 @@ of knowledge your assistant loads automatically. It teaches it to:
 → **[Install the skills](reference-skills.md)** (`./scripts/install-skills.sh`), then
 restart your assistant. From then on it just knows how to work in Godot.
 
-With the skill in place you talk in plain language and supervise in Godot. Every
-stage below shows **what you ask** and **what the assistant does under the hood** —
-so you can follow along and spot a stall. The rhythm is always the same:
-**orient → enable → preview → act → verify.**
+With the skill in place you talk in plain language and supervise in Godot. The rhythm is
+always the same: **orient → enable → preview → act → verify.**
 
-::: info No skill installed?
+::: info Under the hood
+Each stage below shows **what you ask**, then — **under the hood** — the `godot_*` calls
+your assistant makes. **You never type them**; they're shown so you can follow along and
+spot a stall.
+:::
+
+::: warning No skill installed?
 The workflow degrades gracefully without it, but the assistant won't know to enable
 toolsets on its own or to read the honesty fields — you'll be prompting it about
 `unknown tool` errors and stale-save verdicts yourself. Install the skill.
