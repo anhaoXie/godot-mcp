@@ -1,38 +1,56 @@
 ---
 type: index
-title: "Core concepts"
-description: "Toolsets, safety classes, the envelope, tool naming, and honesty fields — the vocabulary the rest of the docs assume."
+title: "Why & how it works"
+description: "The problem godot-mcp solves, why it's built this way, and the ideas every other page assumes."
 created: 2026-09-19
-updated: 2026-09-23
+updated: 2026-10-11
 ---
 
-# Core concepts
+# Why & how it works
 
-These are the terms every other page uses. Five ideas cover the whole system.
+Two minutes here and the rest of the docs will click.
 
-## 1. The toolset (gating unit)
+## The problem
 
-Every tool carries **exactly one category tag**. `core` (diagnostics, toolset
-management) is always on; everything else ships **gated off**. The agent turns
-a toolset on with `godot_enable_toolset("scene_edit")`, which writes into a
-server-global enabled set and announces the change so clients refresh their
-cached registry — `notifications/tools/list_changed`, plus a
-`subscriptions/listen` stream on the `2026-07-28` protocol. Because many clients
-ignore the notification, the enable result also carries the enabled tools'
-names and input schemas, so even a client that never refreshes can call them
-immediately.
+An AI agent can already edit Godot files on disk — but it edits **blind**:
 
-Why gate at all? 194 tools in the context window degrade tool-selection and
-burn tokens. The default surface (`core` + `inspection` — 24 tools) is enough
-to orient and inspect; the agent pulls in `scene_edit` only when it means to
-edit. `godot_list_toolsets()` is always authoritative.
+- it can't *see* the live scene (instanced scenes, `owner` relationships, the open tab, the selection, unsaved edits);
+- it can't *run* anything, so "does this work?" is unanswerable without a human pressing play;
+- its file writes race the editor's importer, so its next check can read a stale class cache;
+- a mistake has no undo unless the editor's own stack was involved.
 
-Some toolsets are version-gated: `scene_edit`, `input_map`, `tilemap`,
-`scene_3d` require Godot 4.4+, because they lean on editor APIs validated
-there. Enabling one on an older editor returns a structured
+godot-mcp closes that gap: the agent talks to the **live editor** over MCP, so every action lands on the project you're actually looking at — with undo, verification, and honest reporting.
+
+## Why it's built this way (the short version)
+
+- **Editor-first, not file-first.** The editor owns state the disk doesn't — unsaved changes, `owner`, editable-instance flags, the selection, the importer cache. Every mutation goes through the editor's own APIs (`EditorUndoRedoManager`, `EditorInterface`, `ProjectSettings`), so *your* undo stack covers the agent's actions and the editor's own rules apply.
+- **The server listens; the editor connects out.** The editor is the app that comes and goes, so it's the one that dials and reconnects (with backoff). The server can start before Godot, before the agent's first call, or in Docker — launch order never matters. The direction of commands is unchanged: the server still initiates every one.
+- **Safety lives in the server, not the addon.** The addon only executes; it never decides whether an action is allowed. Safety classes, previews, `confirm` gates, and preconditions all live in `mcp_server/safety.py`, so a misbehaving addon can't bypass the confirm gate.
+- **Honest results over optimistic ones.** A result that *reads* like success but isn't is the worst failure mode for an agent with no human watching. So nothing ever says "done" without saying what happened to disk (see the honesty fields below).
+- **Game-agnostic by design.** No game vocabulary ships here. A game-specific project layers its own tools and prompts on top; anything that only makes sense for one game belongs there, not here.
+
+## The ideas every page assumes
+
+### 1. The toolset (the gating unit)
+
+Every tool carries **exactly one category tag**. `core` (diagnostics and toolset
+management) is always on; everything else ships **gated off**. The agent switches
+one on with `godot_enable_toolset("scene_edit")`, which updates a server-global
+enabled set and announces the change (`notifications/tools/list_changed`, plus a
+`subscriptions/listen` stream on the `2026-07-28` protocol). Because many clients
+ignore the notification, the enable result also carries the enabled tools' names
+and input schemas, so even a client that never refreshes can call them.
+
+Why gate at all? 194 tools in the context window degrade tool-selection and burn
+tokens. The default surface (`core` + `inspection` — 24 tools) is enough to orient
+and inspect; the agent pulls in `scene_edit` only when it means to edit.
+`godot_list_toolsets()` is always authoritative.
+
+A few toolsets are version-gated (`scene_edit`, `input_map`, `tilemap`,
+`scene_3d` need Godot 4.4+); enabling one on an older editor returns a structured
 `PRECONDITION_FAILED … [required=godot_version]`.
 
-## 2. The safety class
+### 2. The safety class
 
 Every tool is one of:
 
@@ -43,13 +61,13 @@ Every tool is one of:
 | `destructive` | Deletes/overwrites; maybe irreversible | `dry_run` **and** `confirm: bool = True` |
 | `runtime` | Controls game execution | varies |
 
-`dry_run=True` runs preconditions and returns what *would* happen — nothing is
-sent. `confirm=True` is required for destructive tools; without it the tool
-returns `PRECONDITION_FAILED … [required=confirm]`. `godot_undo` covers every
-UndoRedo-wrapped mutation (batch sets above 20 nodes bypass the stack and say
-so via `undoable: false`).
+`dry_run=True` runs the checks and returns what *would* happen — nothing is sent.
+`confirm=True` is required for destructive tools; without it the tool returns
+`PRECONDITION_FAILED … [required=confirm]`. `godot_undo` covers every
+UndoRedo-wrapped change (batches above 20 nodes bypass the stack and say so via
+`undoable: false`).
 
-## 3. The envelope (and why errors look like this)
+### 3. The envelope (and why errors look like this)
 
 ```jsonc
 // server → addon (command)
@@ -66,19 +84,17 @@ Failures never cross as stack traces:
 
 `error` is from a fixed enum; `hint` tells the agent what to do next; `required`
 names the precondition to satisfy. The server shapes these into FastMCP
-`ToolError`s, so the agent sees the same structured failure regardless of
-transport.
+`ToolError`s, so the agent sees the same structured failure on every transport.
 
-## 4. Naming: `godot_<toolset>_<action>`
+### 4. Naming: `godot_<toolset>_<action>`
 
 The exposed name is the gating toolset made visible: `create_node` in the
-`scene_edit` toolset is `godot_scene_edit_create_node`. The prefix *is* the
-gate — an agent can read the name and know what it must enable. Always-on
-`core`/meta tools are just `godot_<action>` (`godot_health_check`,
-`godot_enable_toolset`). The mapping is applied centrally and enforced by a
-contract test.
+`scene_edit` toolset is `godot_scene_edit_create_node`. The prefix *is* the gate —
+an agent can read the name and know what it must enable. Always-on `core`/meta
+tools are just `godot_<action>` (`godot_health_check`, `godot_enable_toolset`). The
+mapping is applied centrally and enforced by a contract test.
 
-## 5. Honesty fields
+### 5. Honesty fields
 
 Results carry structured self-reporting that reads as ground truth:
 
@@ -91,14 +107,15 @@ Results carry structured self-reporting that reads as ground truth:
 | `reason` (readiness) | poll-based tools | why the tool is still pending (`capture_pending`, `scan_in_flight`, …) |
 | `scanning` | `asset_import_get_status`, `rescan_filesystem` | the editor's filesystem scan is in flight |
 
-## 6. Contract versioning
+### 6. Contract versioning
 
-`godot_get_server_info` carries `contract_version` (breaking-change counter,
+`godot_get_server_info` carries `contract_version` (a breaking-change counter,
 currently **1**) and `min_compatible_contract`. A client is compatible when
 `min ≤ client ≤ contract`. Additive changes (new tools, optional fields) never
-bump it; removals/renames do. The CalVer build version (`2026.10.10`) moves
+bump it; removals and renames do. The CalVer build version (`2026.10.10`) moves
 every release and is *not* the compatibility signal.
 
 ---
 
-Next: [the architecture in depth](architecture/index.md).
+Deep dive next: **[Under the hood](architecture/index.md)** — the four-layer chain,
+the bridge, and the full contract.

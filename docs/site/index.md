@@ -3,99 +3,70 @@ layout: home
 
 hero:
   name: 'godot-mcp'
-  text: 'Drive a live Godot editor from an AI agent'
-  tagline: 'A generic, game-agnostic MCP server for AI-driven Godot development — inspect, mutate, run, and verify a real project over the Model Context Protocol. 194 tools across 29 gated toolsets.'
+  text: 'Build your Godot game by talking to your AI'
+  tagline: 'Your AI assistant drives a live Godot editor — inspecting, editing, running, and double-checking its own work, with every change undoable. No more editing files blind.'
   actions:
     - theme: brand
-      text: Make a game with your AI agent
-      link: ./getting-started-with-an-agent
+      text: Get started
+      link: ./getting-started
     - theme: alt
-      text: What & why (technical)
-      link: ./what-why
+      text: How it works
+      link: ./concepts
     - theme: alt
-      text: LLM docs (llms.txt)
-      link: /godot-mcp/llms.txt
+      text: GitHub
+      link: https://github.com/hybridindie/godot-mcp
 
 features:
-  - title: The editor is the participant
-    details: Every action happens against the live editor — the same scene the human sees, with the editor's own undo stack covering agent actions. File-blind agents drift; this one doesn't.
-  - title: Safety is a product, not a flag
-    details: Every tool carries a safety class. Destructive tools require confirm. dry_run previews run the same persistence rule the real run will. All safety lives in the server — never in the addon.
-  - title: 194 tools, gated on demand
-    details: Only core + inspection are exposed by default. The agent enables toolsets as needed — a small surface keeps tool-selection sharp. New categories always register gated off.
-  - title: Honest results, not optimistic ones
-    details: Every mutation stamps a persistence verdict; batches report undoable and aborted_at; parse checks flag rescan_pending; timeouts are distinguished from crashes.
+  - title: It works in your real editor
+    details: Every action happens against the editor you have open — the scene you can see. Agent edits land on Godot's own undo stack, so Ctrl+Z works exactly like it does for you.
+  - title: It tells the truth
+    details: Results never fake success. Every edit says whether the save will really keep it, batches report what actually ran, and a timeout is never dressed up as a crash.
+  - title: A small, sharp surface
+    details: Only a handful of tools are on by default; the agent pulls in more only when a task needs them. A focused surface means better choices and fewer wasted calls.
+  - title: Safe by construction
+    details: Destructive actions ask first, previews are free, and every safety and permission decision lives on the server — never in the editor.
 ---
+
+## See it catch a mistake
+
+Ask your assistant to add a node inside an instanced scene:
+
+```text
+> add a marker node under Relic/Cold
+
+{ "node_path": "Relic/Cold/Marker", "created": true,
+  "persisted": false,
+  "reason": "instanced_child_not_editable",
+  "hint": "'Relic/Cold' is inside the instanced scene 'Relic', which doesn't have
+           Editable Children enabled — the change shows in the editor but won't be
+           saved. Enable Editable Children on 'Relic', or target a node the scene owns." }
+```
+
+A file-blind agent would just say *"done."* godot-mcp tells you **what will actually be saved** — and exactly how to fix it. That honesty is the whole point.
+
+## Start in about two minutes
+
+1. **Add the addon** to your Godot project and switch it on — *Project → Project Settings → Plugins → Godot Editor MCP - Addon*.
+2. **Point your AI assistant at it** with one line in its MCP config (for Claude Code: `claude mcp add godot -- uvx godot-editor-mcp`).
+3. **Tell it what you want** — *"add a player that jumps"*, *"make the jump feel snappier"*, *"why does it crash on start?"*.
+
+New to all this? **[Start with your AI agent](./getting-started-with-an-agent)** walks it through step by step — your assistant does the installing. Prefer to do it yourself? **[Manual setup](./getting-started-install)**.
 
 ## Two ways in
 
-**Here to make a game?** Hand the setup to your AI assistant and build by describing
-what you want — no terminal, no MCP knowledge required.
-→ **[Set up with your AI agent](./getting-started-with-an-agent)**
-
-**Here for the tool itself?** (You know MCP, and want to understand it or contribute.)
-→ **[What & why](./what-why)** · **[Architecture](./architecture/)** · **[Reference](./reference)** · **[Contributing](https://github.com/hybridindie/godot-mcp/blob/main/CONTRIBUTING.md)**
-
----
-
-## The data path, end to end
-
-Every agent action crosses four layers — each hop is contract-tested:
-
-```mermaid
-flowchart LR
-    AI["AI client (OpenCode / Claude / any MCP host)"]
-    SRV["FastMCP server (Python) safety · gating · Pydantic models"]
-    BR["WebSocket listener ws://127.0.0.1:9080"]
-    ADDON["Godot addon (GDScript) dials out · reconnects"]
-    ED[("Live Godot project")]
-    AI -->|"stdio (MCP)"| SRV
-    SRV --- BR
-    ADDON ==>|"connects out"| BR
-    BR -.->|"{id, command, params}"| ADDON
-    ADDON -->|"Editor API"| ED
-    ADDON -.->|"{id, ok, result, error}"| BR
-```
-
-The bold arrow is the transport — the editor dials out and reconnects, so
-launch order never matters. Once connected, the **server still initiates every
-command**; the addon responds.
-
-## The proof in one call
-
-Ask the agent to create a node under an instanced scene child:
-
-```text
-> godot_scene_edit_create_node(parent_path="Relic/Cold", node_type="Node", name="Extra")
-
-{ "node_path": "Relic/Cold/Extra", "created": true,
-  "persisted": false,
-  "reason": "instanced_child_not_editable",
-  "hint": "'Relic/Cold' is inside the instanced scene 'Relic', which does not
-           have Editable Children enabled — the change shows in the editor but
-           will not be saved. Enable Editable Children on 'Relic', or target a
-           node the scene owns." }
-
-PROOF: a file-blind agent would believe the node was created. The verdict
-names the failure AND the fix — and godot_scene_edit_set_editable_children
-is the action the hint names.
-```
-
-Run it yourself: [getting started](./getting-started) — the whole surface is
-additive and pinned by contract tests.
-
-> [!WARNING]
-> **Contract version 1** — clients negotiate via
-> `godot_get_server_info`'s `contract_version` / `min_compatible_contract`.
-> Additive changes never break a client; removals and renames bump the counter.
-
----
+- **Here to make a game?** Hand the setup to your assistant and build by describing what you want.
+  → **[Start with your AI agent](./getting-started-with-an-agent)**
+- **Here for the tool itself?** (you know MCP — and maybe want to contribute.)
+  → **[Concepts](./concepts)** · **[Under the hood](./architecture/)** · **[Reference](./reference)** · **[Contributing](https://github.com/hybridindie/godot-mcp/blob/main/CONTRIBUTING.md)**
 
 ## Where to go next
 
-- **[Set up with your AI agent](./getting-started-with-an-agent)** — for creators: the assistant does the install
-- **[What & why](./what-why)** — the reasoning behind every major design decision
-- **[Core concepts](./concepts)** — the five ideas the rest of the docs assume
-- **[Architecture](./architecture/)** — the bridge, the envelope, gating, safety, persistence, readiness
-- **[Reference](./reference)** — every tool, safety class, value shape, error code, env var
-- **[Guides](./guides)** — build a scene, play-test and debug, verify your work
+- **[Get started](./getting-started)** — install, connect, and drive your first session
+- **[Guides](./guides)** — build a scene, play-test & debug, verify your work, ship
+- **[Concepts](./concepts)** — how it works, and why it's built this way
+- **[Reference](./reference)** — every tool, safety class, error code, and setting
+- **[Under the hood](./architecture/)** — the bridge, the envelope, gating, and safety
+
+---
+
+> **For AI agents.** This site ships [`llms.txt`](https://hybridindie.github.io/godot-mcp/llms.txt) (a page index) and [`llms-full.txt`](https://hybridindie.github.io/godot-mcp/llms-full.txt) (the whole site in one fetch).

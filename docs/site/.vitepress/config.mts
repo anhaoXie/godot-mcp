@@ -46,11 +46,11 @@ export default withMermaid(defineConfig({
   themeConfig: {
     siteTitle: 'godot-mcp',
     nav: [
-      { text: 'Make a game', link: '/getting-started-with-an-agent' },
-      { text: 'Guide', link: '/what-why' },
-      { text: 'Getting Started', link: '/getting-started-install' },
-      { text: 'Architecture', link: '/architecture/bridge' },
-      { text: 'Reference', link: '/reference-toolsets' },
+      { text: 'Get started', link: '/getting-started' },
+      { text: 'Guides', link: '/guides' },
+      { text: 'Concepts', link: '/concepts' },
+      { text: 'Reference', link: '/reference' },
+      { text: 'Under the hood', link: '/architecture/' },
       {
         text: 'LLM',
         items: [
@@ -65,44 +65,38 @@ export default withMermaid(defineConfig({
     ],
     sidebar: [
       {
-        text: 'Make a game with your AI agent',
+        text: 'Get started',
         items: [
-          { text: 'Set it up (no code)', link: '/getting-started-with-an-agent' }
+          { text: 'Overview', link: '/getting-started' },
+          { text: 'Start with your AI agent', link: '/getting-started-with-an-agent' },
+          { text: 'Setup: the MCP server', link: '/getting-started-install' },
+          { text: 'Setup: the Godot addon', link: '/getting-started-addon' },
+          { text: 'Setup: your client', link: '/getting-started-clients' },
+          { text: 'Your first session', link: '/getting-started-first-session' },
+          { text: 'Remote & multi-client', link: '/getting-started-openwebui' }
         ]
       },
       {
-        text: 'Start Here',
+        text: 'Guides',
         items: [
-          { text: 'What & why', link: '/what-why' },
-          { text: 'Core concepts', link: '/concepts' },
-          { text: 'First session', link: '/getting-started-first-session' }
+          { text: 'Overview', link: '/guides' },
+          { text: 'Build a scene', link: '/guides-build-scene' },
+          { text: 'Play-test & debug', link: '/guides-playtest-debug' },
+          { text: 'Verify your work', link: '/guides-verify' },
+          { text: 'Ship: export, tests & CI', link: '/guides-ship' },
+          { text: 'Examples', link: '/guides-examples' }
         ]
       },
       {
-        text: 'Getting Started (manual / technical)',
+        text: 'Concepts',
         items: [
-          { text: 'Install the MCP server', link: '/getting-started-install' },
-          { text: 'Install the Godot addon', link: '/getting-started-addon' },
-          { text: 'Configure your client', link: '/getting-started-clients' },
-          { text: 'Remote access & OpenWebUI', link: '/getting-started-openwebui' }
-        ]
-      },
-      {
-        text: 'Architecture',
-        items: [
-          { text: 'The four-layer chain', link: '/architecture/' },
-          { text: 'The Godot addon', link: '/architecture/addon' },
-          { text: 'Bridge & transport', link: '/architecture/bridge' },
-          { text: 'The JSON envelope', link: '/architecture/envelope' },
-          { text: 'Toolset gating', link: '/architecture/gating' },
-          { text: 'The safety model', link: '/architecture/safety' },
-          { text: 'Persistence truth', link: '/architecture/persistence' },
-          { text: 'The readiness envelope', link: '/architecture/readiness' }
+          { text: 'Why & how it works', link: '/concepts' }
         ]
       },
       {
         text: 'Reference',
         items: [
+          { text: 'Overview', link: '/reference' },
           { text: 'Toolsets & tools', link: '/reference-toolsets' },
           { text: 'Safety classes', link: '/reference-safety-classes' },
           { text: 'Value shapes', link: '/reference-value-shapes' },
@@ -115,13 +109,16 @@ export default withMermaid(defineConfig({
         ]
       },
       {
-        text: 'Guides',
+        text: 'Under the hood',
         items: [
-          { text: 'Build a scene', link: '/guides-build-scene' },
-          { text: 'Play-test & debug', link: '/guides-playtest-debug' },
-          { text: 'Verify your work', link: '/guides-verify' },
-          { text: 'Ship: export, tests & CI', link: '/guides-ship' },
-          { text: 'Examples', link: '/guides-examples' }
+          { text: 'The four-layer chain', link: '/architecture/' },
+          { text: 'The Godot addon', link: '/architecture/addon' },
+          { text: 'Bridge & transport', link: '/architecture/bridge' },
+          { text: 'The JSON envelope', link: '/architecture/envelope' },
+          { text: 'Toolset gating', link: '/architecture/gating' },
+          { text: 'The safety model', link: '/architecture/safety' },
+          { text: 'Persistence truth', link: '/architecture/persistence' },
+          { text: 'The readiness envelope', link: '/architecture/readiness' }
         ]
       },
       {

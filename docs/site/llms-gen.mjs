@@ -35,8 +35,8 @@ const SUMMARY =
 const DETAILS =
   'godot-mcp is a generic, game-agnostic MCP server: the FastMCP server owns ' +
   'safety and gating, the Godot addon owns editor API calls, and a versioned ' +
-  'JSON envelope joins them. Start with what-why (the reasoning), concepts ' +
-  '(the vocabulary), and getting-started for setup. Every mutation result ' +
+  'JSON envelope joins them. Start with concepts (how it works and why), then ' +
+  'getting-started for setup. Every mutation result ' +
   'carries honesty fields (persisted/undoable/aborted_at/rescan_pending) that ' +
   'read as ground truth; errors are a stable enum with recovery hints. Each ' +
   'page below also serves a clean markdown variant at its URL with `.md` ' +
@@ -47,24 +47,12 @@ const DETAILS =
 // marks the spec's "Optional" section (secondary links agents can skip when a
 // shorter context is needed).
 const SECTIONS = [
-  { name: 'Home', sources: ['index.md', 'what-why.md', 'concepts.md'] },
+  { name: 'Home', sources: ['index.md'] },
   {
-    name: 'Architecture',
-    sources: [
-      'architecture/index.md',
-      'architecture/addon.md',
-      'architecture/bridge.md',
-      'architecture/envelope.md',
-      'architecture/gating.md',
-      'architecture/safety.md',
-      'architecture/persistence.md',
-      'architecture/readiness.md',
-    ],
-  },
-  {
-    name: 'Getting started',
+    name: 'Get started',
     sources: [
       'getting-started.md',
+      'getting-started-with-an-agent.md',
       'getting-started-install.md',
       'getting-started-addon.md',
       'getting-started-clients.md',
@@ -72,6 +60,18 @@ const SECTIONS = [
       'getting-started-openwebui.md',
     ],
   },
+  {
+    name: 'Guides',
+    sources: [
+      'guides.md',
+      'guides-build-scene.md',
+      'guides-playtest-debug.md',
+      'guides-verify.md',
+      'guides-ship.md',
+      'guides-examples.md',
+    ],
+  },
+  { name: 'Concepts', sources: ['concepts.md'] },
   {
     name: 'Reference',
     sources: [
@@ -87,14 +87,16 @@ const SECTIONS = [
     ],
   },
   {
-    name: 'Guides',
+    name: 'Under the hood',
     sources: [
-      'guides.md',
-      'guides-build-scene.md',
-      'guides-playtest-debug.md',
-      'guides-verify.md',
-      'guides-ship.md',
-      'guides-examples.md',
+      'architecture/index.md',
+      'architecture/addon.md',
+      'architecture/bridge.md',
+      'architecture/envelope.md',
+      'architecture/gating.md',
+      'architecture/safety.md',
+      'architecture/persistence.md',
+      'architecture/readiness.md',
     ],
   },
   { name: 'Optional', sources: ['changelog.md'], optional: true },

@@ -91,12 +91,11 @@ Only `core` + `inspection` are exposed by default, so the agent's tool list stay
 
 The full manual lives on the docs site:
 
-- **[What & why](https://hybridindie.github.io/godot-mcp/what-why.html)** — the reasoning behind the design
-- **[Getting started](https://hybridindie.github.io/godot-mcp/getting-started-install.html)** — server, addon, client, first session
-- **[Core concepts](https://hybridindie.github.io/godot-mcp/concepts.html)** — toolsets, safety classes, the envelope
-- **[Architecture](https://hybridindie.github.io/godot-mcp/architecture/)** — the bridge, gating, safety, persistence, readiness
-- **[Guides](https://hybridindie.github.io/godot-mcp/guides-build-scene.html)** — build a scene, play-test & debug, verify, ship
+- **[Get started](https://hybridindie.github.io/godot-mcp/getting-started.html)** — install, connect, and drive your first session
+- **[Concepts](https://hybridindie.github.io/godot-mcp/concepts.html)** — how it works and why it's built this way
+- **[Guides](https://hybridindie.github.io/godot-mcp/guides.html)** — build a scene, play-test & debug, verify, ship
 - **[Reference](https://hybridindie.github.io/godot-mcp/reference.html)** — toolsets, safety, errors, prompts, skills, env vars
+- **[Under the hood](https://hybridindie.github.io/godot-mcp/architecture/)** — the bridge, gating, safety, persistence, readiness
 - **[Changelog](https://hybridindie.github.io/godot-mcp/changelog.html)** — what shipped in each release
 
 ## Development

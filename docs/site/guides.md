@@ -1,23 +1,20 @@
 ---
 type: index
 title: "Guides"
-description: "Task-oriented recipes — building scenes, play-testing, verification, and remote access."
+description: "Task recipes — build a scene, play-test & debug, verify your work, and ship."
 created: 2026-09-19
-updated: 2026-09-23
+updated: 2026-10-11
 ---
 
 # Guides
 
-Task-oriented walks that compose the reference pages. Each shows the `godot_*`
-calls the **agent** makes on your behalf — you prompt in plain language and
-supervise in the editor; the calls are listed so you can follow along and spot
-where the agent stalled. New here? Start with
-[your first session](getting-started-first-session.md).
+Task-by-task recipes that show **what to ask** and **what the agent does** at each
+step — you prompt in plain language and watch it happen in Godot.
 
-- [Build a scene](guides-build-scene.md) — scaffold, nodes, scripts, collision, save — with previews and honesty fields at each step.
-- [Play-test & debug](guides-playtest-debug.md) — the live loop: play, inspect, simulate input, assert, break/step.
-- [Verify your work](guides-verify.md) — the verification stack: parse checks, runtime capture, shader validation, and what each one actually covers.
-- [Ship: export, tests & CI](guides-ship.md) — headless export, test suites, and the CI-shaped verification loop.
-- [Examples](guides-examples.md) — two complete games under `examples/` to run the toolsets against, including the debugger demo.
-- [Remote access](getting-started-openwebui.md) — OpenWebUI / HTTP / Docker setups (also listed under Getting started).
+- **[Build a scene](guides-build-scene.md)** — scaffold → nodes → script → collision → save, with previews and honest save verdicts along the way.
+- **[Play-test & debug](guides-playtest-debug.md)** — the live loop: play the game, inspect it, simulate input, assert state, then break and step through the debugger.
+- **[Verify your work](guides-verify.md)** — the verification stack: what each check catches, what it misses, and what to compose for real confidence.
+- **[Ship: export, tests & CI](guides-ship.md)** — headless export, running the project's test suite, and the CI-shaped verification loop.
+- **[Examples](guides-examples.md)** — two complete games under `examples/`, including the debugger demo, to run the toolsets against.
 
+New here? Start with **[your first session](getting-started-first-session.md)**.

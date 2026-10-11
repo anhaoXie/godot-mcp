@@ -136,6 +136,6 @@ once — after that, any MCP-capable assistant can use it.
 ---
 
 **Technical readers.** If you want the internals — or to contribute — the rest of these
-docs are for you: start at [What & why](what-why.md) or the
-[architecture](architecture/index.md), and see
+docs are for you: start at [Concepts](concepts.md) or
+[Under the hood](architecture/index.md), and see
 [`CONTRIBUTING.md`](https://github.com/hybridindie/godot-mcp/blob/main/CONTRIBUTING.md).

@@ -1,27 +1,32 @@
 ---
 type: index
-title: "Getting started"
-description: "Install, connect, and drive your first Godot session through MCP."
+title: "Get started"
+description: "Install godot-mcp, connect your editor and AI assistant, and drive your first session."
 created: 2026-09-19
-updated: 2026-10-10
+updated: 2026-10-11
 ---
 
-# Getting started
+# Get started
 
-!!! tip "Just want to make a game?"
-    If you use an AI assistant and would rather not deal with installs or MCP, start with
-    **[Set up with your AI agent](getting-started-with-an-agent.md)** — the assistant does
-    the setup. The four steps below are the manual / technical path.
+Two ways to get running. Pick whichever fits.
 
-Four steps, then you're driving the editor from an agent:
+## Option 1 — Let your AI assistant do it (easiest)
 
-1. [Install the MCP server](getting-started-install.md) — PyPI, Docker, or from source.
-2. [Install the Godot addon](getting-started-addon.md) — from the Godot Asset Library (**Godot Editor MCP - Addon**), or copy it into your project; then enable it.
-3. [Configure your MCP client](getting-started-clients.md) — OpenCode, Claude, or any MCP host.
-4. [Run your first session](getting-started-first-session.md) — inspect, then mutate, then verify.
+You use an AI assistant (Claude, Codex, ChatGPT…) and would rather not touch a terminal. Hand it the setup:
 
-Remote / multi-machine setups (OpenWebUI, Docker, HTTP transport) are covered
-in [remote access](getting-started-openwebui.md).
+→ **[Start with your AI agent](getting-started-with-an-agent.md)** — one copy-paste prompt installs the server and the addon; you do one click and start building.
+
+## Option 2 — Set it up yourself
+
+You're comfortable with installs and MCP. Four steps:
+
+1. **[Install the MCP server](getting-started-install.md)** — PyPI, Docker, or from source.
+2. **[Install the Godot addon](getting-started-addon.md)** — from the Godot Asset Library (**Godot Editor MCP - Addon**), or copy it in; then enable it.
+3. **[Configure your client](getting-started-clients.md)** — OpenCode, Claude, or any MCP host.
+4. **[Run your first session](getting-started-first-session.md)** — the orient → enable → preview → act → verify rhythm.
+
+Running several clients against one editor, or driving Godot remotely? See
+**[Remote & multi-client](getting-started-openwebui.md)**.
 
 ## Requirements
 
@@ -33,6 +38,9 @@ in [remote access](getting-started-openwebui.md).
 | **OS** | macOS / Linux / Windows | Any desktop |
 
 !!! note "Godot 4.4 is the floor"
-    The addon checks the editor version on enable and warns if it is older.
-    Some toolsets (`scene_edit`, `input_map`, `tilemap`, `scene_3d`) are
-    version-gated and refuse to enable on older editors.
+    The addon checks the editor version on enable and warns if it's older. A few toolsets
+    (`scene_edit`, `input_map`, `tilemap`, `scene_3d`) are version-gated and refuse to
+    enable on older editors.
+
+New to the ideas behind any of this? **[Concepts](concepts.md)** explains the mental
+model in five short ideas.
