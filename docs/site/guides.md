@@ -8,8 +8,9 @@ updated: 2026-10-11
 
 # Guides
 
-Task-by-task recipes that show **what to ask** and **what the agent does** at each
-step — you prompt in plain language and watch it happen in Godot.
+Task-by-task recipes that show **what to ask** — and, **under the hood**, what your
+assistant does at each step. You prompt in plain language and watch it happen in Godot;
+the `godot_*` calls are the assistant's, never yours.
 
 - **[Build a scene](guides-build-scene.md)** — scaffold → nodes → script → collision → save, with previews and honest save verdicts along the way.
 - **[Play-test & debug](guides-playtest-debug.md)** — the live loop: play the game, inspect it, simulate input, assert state, then break and step through the debugger.

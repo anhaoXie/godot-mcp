@@ -3,15 +3,15 @@ type: index
 title: "Play-test & debug"
 description: "The live loop — play, inspect, simulate input, assert, break and step through the debugger."
 created: 2026-09-19
-updated: 2026-10-10
+updated: 2026-10-11
 ---
 
 # Play-test & debug
 
-The live loop against a real running game. You ask the agent to play, inspect,
-and break; the `godot_*` calls below are what it issues. Requires the `runtime`,
-`input`, `testing`, and `debugger` toolsets plus the `MCPRuntimeProbe` autoload
-in the game's project.
+The live loop against a real running game. You ask in plain language; the `godot_*` calls
+below are **under the hood** — your assistant issues them, **you never type these**.
+Requires the `runtime`, `input`, `testing`, and `debugger` toolsets plus the
+`MCPRuntimeProbe` autoload in the game's project.
 
 ## Two run modes — pick the right one
 

@@ -3,14 +3,14 @@ type: index
 title: "Ship: export, tests & CI"
 description: "The ship loop — export builds, run test suites headlessly, and wire the verification into CI."
 created: 2026-09-19
-updated: 2026-10-10
+updated: 2026-10-11
 ---
 
 # Ship: export, tests & CI
 
 The end of the loop: verification runs headless (no editor needed), so the whole
-build-test-ship path works in CI. You ask the agent to export or run the suite;
-the `godot_*` calls below are what it issues.
+build-test-ship path works in CI. You ask in plain language; the `godot_*` calls below are
+**under the hood** — your assistant issues them, **you never type these**.
 
 ## Export a build
 
