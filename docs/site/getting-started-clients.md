@@ -76,40 +76,42 @@ or Streamable HTTP:
   standard MCP, so any client that drives MCP tools works — a coding agent, an
   IDE assistant, or your own orchestrator.
 
-!!! note "Sessions are stateless"
-    godot-mcp serves the sessionless MCP `2026-07-28` protocol shape: no
-    per-session state, and toolset grants are server-global. A reconnect keeps
-    the grant — nothing to re-establish.
+::: info Sessions are stateless
+godot-mcp serves the sessionless MCP `2026-07-28` protocol shape: no
+per-session state, and toolset grants are server-global. A reconnect keeps
+the grant — nothing to re-establish.
+:::
 
-!!! warning "Most clients don't refresh their tool list after a toggle"
-    `godot_enable_toolset` opens the gate server-side, but the server can only
-    *announce* the change: `notifications/tools/list_changed` is a standard MCP
-    notification, and whether the client re-runs `tools/list` is a **client
-    choice** — the spec never makes re-listing a `MUST`. In practice **most MCP
-    hosts cache the tool list at session start and ignore the notification**, so
-    the newly-enabled tools never reach the model. Treat the gate as server
-    state the agent *pulls*, not a push the client must honor.
+::: warning Most clients don't refresh their tool list after a toggle
+`godot_enable_toolset` opens the gate server-side, but the server can only
+*announce* the change: `notifications/tools/list_changed` is a standard MCP
+notification, and whether the client re-runs `tools/list` is a **client
+choice** — the spec never makes re-listing a `MUST`. In practice **most MCP
+hosts cache the tool list at session start and ignore the notification**, so
+the newly-enabled tools never reach the model. Treat the gate as server
+state the agent *pulls*, not a push the client must honor.
 
-    **If your client hits this: pre-enable the toolsets at server startup**, so
-    the *initial* `tools/list` already contains them and no refresh is needed:
+**If your client hits this: pre-enable the toolsets at server startup**, so
+the *initial* `tools/list` already contains them and no refresh is needed:
 
-    ```jsonc
-    // same MCP entry — add an env block to the server command
-    {
-      "mcp": {
-        "godot": {
-          "type": "local",
-          "command": ["godot-editor-mcp"],
-          "env": { "GODOT_MCP_DEFAULT_TOOLSETS": "scene_edit,scripts,physics,runtime" }
-        }
-      }
+```jsonc
+// same MCP entry — add an env block to the server command
+{
+  "mcp": {
+    "godot": {
+      "type": "local",
+      "command": ["godot-editor-mcp"],
+      "env": { "GODOT_MCP_DEFAULT_TOOLSETS": "scene_edit,scripts,physics,runtime" }
     }
-    ```
+  }
+}
+```
 
-    `GODOT_MCP_DEFAULT_TOOLSETS` takes a comma-separated category list, or
-    `all` for the full surface. It seeds the enabled set before the client's
-    first `tools/list`, so the toolsets are present from the start.
-    `enable_toolset` still works normally at runtime.
+`GODOT_MCP_DEFAULT_TOOLSETS` takes a comma-separated category list, or
+`all` for the full surface. It seeds the enabled set before the client's
+first `tools/list`, so the toolsets are present from the start.
+`enable_toolset` still works normally at runtime.
+:::
 
 ## Which clients refresh their tool list?
 

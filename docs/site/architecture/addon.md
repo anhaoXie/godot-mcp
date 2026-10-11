@@ -72,11 +72,12 @@ the Godot Editor API and returns a correlated `{id, ok, result, error}` response
 - **Nothing is guessed.** The router is the only place command strings resolve;
   the server's handshake surface mirrors its registered-command list.
 
-!!! note "Why the addon holds no safety logic"
-    Preconditions, `dry_run`/`confirm`, gating, and permission decisions all
-    live in the server (see [The safety model](safety.md)). The addon performs
-    the editor operation it is asked to, undo-tracked and serialized. This keeps
-    it game-agnostic — it knows Godot, not your game.
+::: info Why the addon holds no safety logic
+Preconditions, `dry_run`/`confirm`, gating, and permission decisions all
+live in the server (see [The safety model](safety.md)). The addon performs
+the editor operation it is asked to, undo-tracked and serialized. This keeps
+it game-agnostic — it knows Godot, not your game.
+:::
 
 ## Mutations are undoable
 

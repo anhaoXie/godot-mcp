@@ -8,8 +8,9 @@ updated: 2026-09-23
 
 # Architecture
 
-!!! info "For readers who know MCP"
-    This is the technical track. New here and just want to make a game? → **[Set up with your AI agent](../getting-started-with-an-agent.md)**.
+::: info For readers who know MCP
+This is the technical track. New here and just want to make a game? → **[Set up with your AI agent](../getting-started-with-an-agent.md)**.
+:::
 
 godot-mcp is two halves joined by one seam. Keep the seam clean; keep logic out
 of the handlers.

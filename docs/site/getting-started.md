@@ -37,10 +37,11 @@ Running several clients against one editor, or driving Godot remotely? See
 | **Package manager** | [uv](https://docs.astral.sh/uv/) | uv |
 | **OS** | macOS / Linux / Windows | Any desktop |
 
-!!! note "Godot 4.4 is the floor"
-    The addon checks the editor version on enable and warns if it's older. A few toolsets
-    (`scene_edit`, `input_map`, `tilemap`, `scene_3d`) are version-gated and refuse to
-    enable on older editors.
+::: info Godot 4.4 is the floor
+The addon checks the editor version on enable and warns if it's older. A few toolsets
+(`scene_edit`, `input_map`, `tilemap`, `scene_3d`) are version-gated and refuse to
+enable on older editors.
+:::
 
 New to the ideas behind any of this? **[Concepts](concepts.md)** explains the mental
 model in five short ideas.

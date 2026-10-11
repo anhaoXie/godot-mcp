@@ -8,8 +8,9 @@ updated: 2026-09-23
 
 # Install the MCP server
 
-!!! info "For readers who know MCP"
-    This is the manual / technical path. Rather not touch a terminal? → **[Set up with your AI agent](getting-started-with-an-agent.md)** has your assistant do it.
+::: info For readers who know MCP
+This is the manual / technical path. Rather not touch a terminal? → **[Set up with your AI agent](getting-started-with-an-agent.md)** has your assistant do it.
+:::
 
 ## Option A: PyPI (recommended)
 
@@ -45,19 +46,20 @@ uv run godot-editor-mcp   # stdio mode (default)
 | `stdio` (default) | A single local agent | the client spawns `godot-editor-mcp` itself |
 | `http` | Shared service; several clients on one editor; remote/web UIs | `GODOT_MCP_TRANSPORT=http` or `scripts/serve-http.sh` |
 
-!!! tip "Service mode for multiple clients"
-    The bridge to the editor is a single connection — one server process owns
-    it at a time. To give **several** clients (OpenCode, Claude, OpenWebUI, an
-    eval harness) the same live editor, run **one** HTTP service and point
-    every client at `http://<host>:9090/mcp`:
+::: tip Service mode for multiple clients
+The bridge to the editor is a single connection — one server process owns
+it at a time. To give **several** clients (OpenCode, Claude, OpenWebUI, an
+eval harness) the same live editor, run **one** HTTP service and point
+every client at `http://<host>:9090/mcp`:
 
-    ```bash
-    GODOT_MCP_TRANSPORT=http GODOT_MCP_AUTH_TOKEN=<token> \
-      uv run godot-editor-mcp
-    ```
+```bash
+GODOT_MCP_TRANSPORT=http GODOT_MCP_AUTH_TOKEN=<token> \
+  uv run godot-editor-mcp
+```
 
-    Non-loopback HTTP binds **require** a `GODOT_MCP_AUTH_TOKEN` — the server
-    refuses to start without one (fail-fast, #226).
+Non-loopback HTTP binds **require** a `GODOT_MCP_AUTH_TOKEN` — the server
+refuses to start without one (fail-fast, #226).
+:::
 
 ## Verify
 
