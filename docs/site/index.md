@@ -7,11 +7,11 @@ hero:
   tagline: 'A generic, game-agnostic MCP server for AI-driven Godot development — inspect, mutate, run, and verify a real project over the Model Context Protocol. 193 tools across 29 gated toolsets.'
   actions:
     - theme: brand
-      text: What & why
-      link: ./what-why
+      text: Make a game with your AI agent
+      link: ./getting-started-with-an-agent
     - theme: alt
-      text: Getting Started
-      link: ./getting-started
+      text: What & why (technical)
+      link: ./what-why
     - theme: alt
       text: LLM docs (llms.txt)
       link: /godot-mcp/llms.txt
@@ -25,6 +25,17 @@ features:
     details: Only core + inspection are exposed by default. The agent enables toolsets as needed — a small surface keeps tool-selection sharp. New categories always register gated off.
   - title: Honest results, not optimistic ones
     details: Every mutation stamps a persistence verdict; batches report undoable and aborted_at; parse checks flag rescan_pending; timeouts are distinguished from crashes.
+---
+
+## Two ways in
+
+**Here to make a game?** Hand the setup to your AI assistant and build by describing
+what you want — no terminal, no MCP knowledge required.
+→ **[Set up with your AI agent](./getting-started-with-an-agent)**
+
+**Here for the tool itself?** (You know MCP, and want to understand it or contribute.)
+→ **[What & why](./what-why)** · **[Architecture](./architecture/)** · **[Reference](./reference)** · **[Contributing](https://github.com/hybridindie/godot-mcp/blob/main/CONTRIBUTING.md)**
+
 ---
 
 ## The data path, end to end
@@ -82,6 +93,7 @@ additive and pinned by contract tests.
 
 ## Where to go next
 
+- **[Set up with your AI agent](./getting-started-with-an-agent)** — for creators: the assistant does the install
 - **[What & why](./what-why)** — the reasoning behind every major design decision
 - **[Core concepts](./concepts)** — the five ideas the rest of the docs assume
 - **[Architecture](./architecture/)** — the bridge, the envelope, gating, safety, persistence, readiness

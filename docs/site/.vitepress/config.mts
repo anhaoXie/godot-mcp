@@ -46,6 +46,7 @@ export default withMermaid(defineConfig({
   themeConfig: {
     siteTitle: 'godot-mcp',
     nav: [
+      { text: 'Make a game', link: '/getting-started-with-an-agent' },
       { text: 'Guide', link: '/what-why' },
       { text: 'Getting Started', link: '/getting-started-install' },
       { text: 'Architecture', link: '/architecture/bridge' },
@@ -64,6 +65,12 @@ export default withMermaid(defineConfig({
     ],
     sidebar: [
       {
+        text: 'Make a game with your AI agent',
+        items: [
+          { text: 'Set it up (no code)', link: '/getting-started-with-an-agent' }
+        ]
+      },
+      {
         text: 'Start Here',
         items: [
           { text: 'What & why', link: '/what-why' },
@@ -72,7 +79,7 @@ export default withMermaid(defineConfig({
         ]
       },
       {
-        text: 'Getting Started',
+        text: 'Getting Started (manual / technical)',
         items: [
           { text: 'Install the MCP server', link: '/getting-started-install' },
           { text: 'Install the Godot addon', link: '/getting-started-addon' },

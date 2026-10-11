@@ -8,6 +8,11 @@ updated: 2026-10-10
 
 # Getting started
 
+!!! tip "Just want to make a game?"
+    If you use an AI assistant and would rather not deal with installs or MCP, start with
+    **[Set up with your AI agent](getting-started-with-an-agent.md)** — the assistant does
+    the setup. The four steps below are the manual / technical path.
+
 Four steps, then you're driving the editor from an agent:
 
 1. [Install the MCP server](getting-started-install.md) — PyPI, Docker, or from source.
