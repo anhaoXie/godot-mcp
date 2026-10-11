@@ -8,10 +8,14 @@ updated: 2026-10-11
 
 # Play-test & debug
 
-The live loop against a real running game. You ask in plain language; the `godot_*` calls
-below are **under the hood** — your assistant issues them, **you never type these**.
-Requires the `runtime`, `input`, `testing`, and `debugger` toolsets plus the
+The live loop against a real running game. You ask in plain language; the assistant does
+the rest. Requires the `runtime`, `input`, `testing`, and `debugger` toolsets plus the
 `MCPRuntimeProbe` autoload in the game's project.
+
+::: info Under the hood
+The `godot_*` blocks below are **under the hood** — your assistant issues those calls,
+**you never type them.** They're shown so you can follow along and spot a stall.
+:::
 
 ## Two run modes — pick the right one
 

@@ -9,8 +9,12 @@ updated: 2026-10-11
 # Ship: export, tests & CI
 
 The end of the loop: verification runs headless (no editor needed), so the whole
-build-test-ship path works in CI. You ask in plain language; the `godot_*` calls below are
-**under the hood** — your assistant issues them, **you never type these**.
+build-test-ship path works in CI. You ask in plain language; the assistant does the rest.
+
+::: info Under the hood
+The `godot_*` blocks below are **under the hood** — your assistant issues those calls,
+**you never type them.** They're shown so you can follow along and spot a stall.
+:::
 
 ## Export a build
 

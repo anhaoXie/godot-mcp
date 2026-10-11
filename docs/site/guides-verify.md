@@ -3,7 +3,7 @@ type: index
 title: "Verify your work"
 description: "The verification stack — what each check covers, what it misses, and the recommended full pattern."
 created: 2026-09-19
-updated: 2026-10-10
+updated: 2026-10-11
 ---
 
 # Verify your work
@@ -11,6 +11,11 @@ updated: 2026-10-10
 Ask the agent to *prove* an action landed, not just perform it. "Verified" means
 different things at different layers — this page is the honest map: what each
 check covers, what it **misses**, and what to compose for real confidence.
+
+::: info Under the hood
+The `godot_*` calls below are **under the hood** — your assistant issues them,
+**you never type them.** They're shown so you can follow along and spot a stall.
+:::
 
 ## The stack
 

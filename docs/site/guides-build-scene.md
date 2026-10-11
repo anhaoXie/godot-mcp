@@ -9,9 +9,12 @@ updated: 2026-10-11
 # Build a scene
 
 The canonical build loop, with the safety machinery visible at each step. You prompt in
-plain language (*"scaffold a main scene with a Player"*); the `godot_*` calls below are
-**under the hood** — your assistant issues them, **you never type these** — shown so you
-can follow along and spot a stall.
+plain language; the assistant does the rest.
+
+::: info Under the hood
+The `godot_*` blocks below are **under the hood** — your assistant issues those calls,
+**you never type them.** They're shown so you can follow along and spot a stall.
+:::
 
 ## 1. Scaffold
 
