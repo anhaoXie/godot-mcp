@@ -14,16 +14,17 @@ Two ways to get running. Pick whichever fits.
 
 You use an AI assistant (Claude, Codex, ChatGPT…) and would rather not touch a terminal. Hand it the setup:
 
-→ **[Start with your AI agent](getting-started-with-an-agent.md)** — one copy-paste prompt installs the server and the addon; you do one click and start building.
+→ **[Start with your AI agent](getting-started-with-an-agent.md)** — one copy-paste prompt installs the server, the addon, and the skill; you do one click and start building.
 
 ## Option 2 — Set it up yourself
 
-You're comfortable with installs and MCP. Four steps:
+You're comfortable with installs and MCP. Five steps:
 
 1. **[Install the MCP server](getting-started-install.md)** — PyPI, Docker, or from source.
 2. **[Install the Godot addon](getting-started-addon.md)** — from the [Godot Asset Store](https://store.godotengine.org/asset/john-d-studios/godot-editor-mcp-addon/) (**Godot Editor MCP - Addon**), or copy it in; then enable it.
 3. **[Configure your client](getting-started-clients.md)** — OpenCode, Claude, or any MCP host.
-4. **[Run your first session](getting-started-first-session.md)** — the orient → enable → preview → act → verify rhythm.
+4. **[Install the skills](reference-skills.md)** — this is what makes your assistant enable toolsets on its own, read the honesty fields, and avoid the common Godot pitfalls. Do it before your first session.
+5. **[Run your first session](getting-started-first-session.md)** — the orient → enable → preview → act → verify rhythm.
 
 Running several clients against one editor, or driving Godot remotely? See
 **[Remote & multi-client](getting-started-openwebui.md)**.

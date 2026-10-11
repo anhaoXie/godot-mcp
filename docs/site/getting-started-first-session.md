@@ -1,22 +1,34 @@
 ---
 type: index
 title: "Your first session"
-description: "Driving a real Godot project from an AI harness — the orient → enable → preview → act → verify rhythm."
+description: "Install the skill, then drive a real Godot project from your AI assistant — the orient → enable → preview → act → verify rhythm."
 created: 2026-09-19
-updated: 2026-09-30
+updated: 2026-10-11
 ---
 
 # Your first session
 
-godot-mcp is driven **through an AI harness**, not by typing tool names. You
-describe what you want in the editor's terms; the agent in your client (OpenCode,
-Claude, or any MCP host) issues the `godot_*` tool calls and reads the results
-back. You supervise in Godot — the status dock and the undo stack are the
-human's view of what the agent did.
+godot-mcp is driven **through an AI assistant**, not by typing tool names. So the
+single most useful thing you can do first is **install the skill** — a small bundle
+of knowledge your assistant loads automatically. It teaches it to:
 
-Every stage below shows **what you ask** and **what the agent calls under the
-hood** (so you can follow along, and know what to expect in the editor). The
-rhythm is always the same: **orient → enable → preview → act → verify.**
+- check the bridge and version before it starts,
+- **enable the toolset it needs, by itself** (you never manage gates), and
+- read the "what actually happened" fields and avoid the Godot pitfalls that trip agents up.
+
+→ **[Install the skills](reference-skills.md)** (`./scripts/install-skills.sh`), then
+restart your assistant. From then on it just knows how to work in Godot.
+
+With the skill in place you talk in plain language and supervise in Godot. Every
+stage below shows **what you ask** and **what the assistant does under the hood** —
+so you can follow along and spot a stall. The rhythm is always the same:
+**orient → enable → preview → act → verify.**
+
+::: info No skill installed?
+The workflow degrades gracefully without it, but the assistant won't know to enable
+toolsets on its own or to read the honesty fields — you'll be prompting it about
+`unknown tool` errors and stale-save verdicts yourself. Install the skill.
+:::
 
 ## 1. Orient — ask the agent to check the bridge
 
@@ -33,21 +45,22 @@ open Godot with the [addon enabled](getting-started-addon.md), check the status
 dock (bottom panel), and ask again. `godot_get_server_info` is the single most
 useful call: its `next_steps` field usually names the fix for whatever is wrong.
 
-## 2. Enable what you need — the agent must turn toolsets on
+## 2. Enable what you need — the assistant handles it
 
-You: *"Add a Player node to the main scene."* — the agent discovers it can't,
-because only `core` + `inspection` are exposed by default.
+Ask for something that needs a gated toolset and the assistant turns it on for you —
+this is the part the getting-started skill teaches, so you don't have to think about it.
+
+You: *"Add a Player node to the main scene."*
 
 ```
-godot_enable_toolset('scene_edit')    # creating nodes, properties, signals
-godot_enable_toolset('scripts')       # reading/writing GDScript
+godot_enable_toolset('scene_edit')    # the assistant enables what the task needs
+godot_enable_toolset('scripts')
 ```
 
-Gated tools return a structured error naming the missing toolset; the agent's
-fix is one `enable_toolset` call. `godot_list_toolsets()` is authoritative.
-Your job here is nothing — a well-behaved agent enables the toolset itself and
-tells you it did. (If it stalls on `unknown tool`, prompt it: *"enable the
-toolset you need first."*)
+If your assistant instead stalls on `unknown tool`, it's missing the skill (or hasn't
+enabled the toolset) — prompt it: *"enable the toolset you need first"*, or
+[install the skill](reference-skills.md). `godot_list_toolsets()` is always
+authoritative.
 
 ## 3. Inspect before mutating — the agent reads, then edits
 
@@ -125,15 +138,11 @@ rest.
 
 ## Making it smoother
 
-- **Install a skill.** The bundled [skills](reference-skills.md)
-  (`godot-getting-started`, `godot-expert`, …) auto-trigger in the client and
-  teach the agent this rhythm, the toolset gating, and the Godot pitfalls — so
-  you prompt in plain language, not in tool names.
 - **Reach for prompts.** The server's [workflow prompts](reference-prompts.md)
   (`/mcp__godot-mcp__build_scene`, `/play_test`, …) are step-numbered recipes the
-  agent can follow for a whole task.
+  assistant can follow for a whole task — a skill points it at the right one.
 - **Start from an example.** The two games under
-  [examples](guides-examples.md) give the agent a real project to work against.
+  [examples](guides-examples.md) give the assistant a real project to work against.
 
 Next: [Build a scene](guides-build-scene.md) walks the full loop, or
 [Play-test & debug](guides-playtest-debug.md) starts from the runtime side.

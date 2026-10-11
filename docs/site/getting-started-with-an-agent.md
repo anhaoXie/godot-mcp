@@ -56,9 +56,14 @@ Set up godot-mcp for my Godot project so you can drive the editor.
 3. Install the Godot addon into my project: download the latest `godot_mcp_addon.zip`
    from https://github.com/hybridindie/godot-mcp/releases/latest and unzip it into my
    project folder (it adds `addons/godot_mcp/`).
-4. When that's done, tell me to enable the addon: in Godot, Project → Project Settings →
+4. Install the godot-mcp AI skills into your own skills directory so you know how to work
+   here — they teach you to enable toolsets on your own, read the result verdicts, and
+   avoid the common Godot pitfalls. Clone https://github.com/hybridindie/godot-mcp and run
+   `./scripts/install-skills.sh --copy`, or copy the `skills/*` folders into your skills
+   directory. Reload your skills when done.
+5. When that's done, tell me to enable the addon: in Godot, Project → Project Settings →
    Plugins → enable "Godot Editor MCP - Addon".
-5. Once I confirm, verify the connection by calling `godot_health_check` and
+6. Once I confirm, verify the connection by calling `godot_health_check` and
    `godot_get_server_info`, and tell me the version it reports.
 
 Ask me for my project folder path if you're not sure where it is.
