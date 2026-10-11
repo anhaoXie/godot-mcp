@@ -3,7 +3,7 @@ type: index
 title: "Ship: export, tests & CI"
 description: "The ship loop — export builds, run test suites headlessly, and wire the verification into CI."
 created: 2026-09-19
-updated: 2026-09-23
+updated: 2026-10-10
 ---
 
 # Ship: export, tests & CI
@@ -13,6 +13,8 @@ build-test-ship path works in CI. You ask the agent to export or run the suite;
 the `godot_*` calls below are what it issues.
 
 ## Export a build
+
+You: *"Export a Web build."* — the agent runs:
 
 ```
 godot_enable_toolset('export')
@@ -26,6 +28,8 @@ reports the exit code — a non-zero exit is a finding, not a hang. Requires the
 `export` toolset.
 
 ## Run the project's tests
+
+You: *"Run the project's unit tests."* — the agent runs:
 
 ```
 godot_enable_toolset('testing')

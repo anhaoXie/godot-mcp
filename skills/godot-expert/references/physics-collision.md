@@ -50,7 +50,7 @@
 | Obstacle | 16 | 0 | Static — doesn't scan, others scan it |
 
 **Setting via bridge:**
-```python
+```json
 {"command": "cmd_set_node_property",
  "params": {"node_path": "Player", "property": "collision_layer", "value": 1}}
 {"command": "cmd_set_node_property",
@@ -78,7 +78,7 @@ shape = SubResource("Rect_1")
 ```
 
 ### Via the bridge
-```python
+```json
 {"command": "cmd_set_node_property",
  "params": {"node_path": "Player/Collision", "property": "shape",
             "value": {"type": "RectangleShape2D", "size": {"x": 32, "y": 32}}}}

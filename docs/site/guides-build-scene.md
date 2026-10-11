@@ -14,6 +14,8 @@ below are what it issues — listed so you can follow along and spot a stall.
 
 ## 1. Scaffold
 
+You: *"Scaffold a main scene."* — the agent runs:
+
 ```
 godot_enable_toolset('scene_edit')
 godot_scene_edit_create_scene(root_type="Node2D", scene_path="res://scenes/main.tscn")
@@ -25,6 +27,8 @@ root a scene on a custom class: create with the base built-in type, then
 `attach_script` the root.
 
 ## 2. Compose the tree
+
+You: *"Add a Player with a visible Body shape."* — the agent runs:
 
 ```
 godot_scene_edit_create_node(parent_path=".", node_type="CharacterBody2D", node_name="Player")
@@ -38,6 +42,8 @@ or `godot_composite_batch_create_nodes` for many same-typed nodes.
 
 ## 3. Attach behavior
 
+You: *"Give the Player a movement script."* — the agent runs:
+
 ```
 godot_scripts_write(script_path="res://scripts/player.gd", content="extends CharacterBody2D\n…")
 godot_scene_edit_attach_script(node_path="Player", script_path="res://scripts/player.gd")
@@ -47,6 +53,8 @@ Script writes flush to disk immediately (no scene save needed); scene edits
 live in editor memory until `godot_scene_edit_save_scene()`.
 
 ## 4. Physics
+
+You: *"Give the Player collision so it stands on floors."* — the agent runs:
 
 ```
 godot_enable_toolset('physics')
@@ -61,6 +69,8 @@ shape on a 3D body is refused with a naming hint instead of silently shipping
 collisionless levels.
 
 ## 5. Verify, then save
+
+You: *"Check the script parses, then save the scene."* — the agent runs:
 
 ```
 godot_scripts_get_parse_errors(script_path="res://scripts/player.gd")
@@ -83,6 +93,8 @@ Every mutation result carries `persisted`/`reason`/`hint`:
 - Batch results: read `persistence[]` per target and `undoable`.
 
 ## Groups & signals
+
+You: *"Put the Player in the `player` group and connect the Enemy's `died` signal."* — the agent runs:
 
 ```
 godot_scene_edit_add_to_group(node_path="Player", group="player")

@@ -3,7 +3,7 @@ type: index
 title: "Play-test & debug"
 description: "The live loop — play, inspect, simulate input, assert, break and step through the debugger."
 created: 2026-09-19
-updated: 2026-09-23
+updated: 2026-10-10
 ---
 
 # Play-test & debug
@@ -25,6 +25,8 @@ For the full one-call report: `godot_debug_workflow(scene=…, expected_timeout=
 
 ## 1. Register the runtime probe
 
+You: *"Set up live runtime inspection — add the probe autoload if it's missing."* — the agent runs:
+
 ```
 godot_inspection_get_project_info()      # check autoloads for MCPRuntimeProbe
 godot_resources_edit_register_autoload(name='MCPRuntimeProbe',
@@ -34,6 +36,8 @@ godot_resources_edit_register_autoload(name='MCPRuntimeProbe',
 The probe runs in the game (not the editor) and no-ops in exported builds.
 
 ## 2. Play and inspect
+
+You: *"Play the main scene and show me the Player's position over time."* — the agent runs:
 
 ```
 godot_runtime_play_scene(scene_path='res://scenes/main.tscn')
@@ -49,6 +53,8 @@ Pending results carry a `reason` token (`capture_pending`, `probe_pending`) —
 the tool relays it in the timeout error; keep polling rather than re-issuing.
 
 ## 3. Simulate input
+
+You: *"Hold right, release, then press Space."* — the agent runs:
 
 ```
 godot_input_simulate_action(action='ui_right', pressed=true)   # hold
@@ -66,6 +72,8 @@ first. Frozen `input_get_stats().injected` is the signal, not a bug.
 
 ## 4. Assert state
 
+You: *"Assert the Player is visible, then fuzz it with random input."* — the agent runs:
+
 ```
 godot_testing_assert_node_state(node_path='/root/Main/Player',
                                 property='visible', expected=true)
@@ -76,6 +84,8 @@ godot_testing_compare_screenshots(image_a=…, image_b=…, tolerance=0.0)
 ```
 
 ## 5. Break and step
+
+You: *"Set a breakpoint on player.gd line 42 and step through it."* — the agent runs:
 
 ```
 godot_debugger_set_breakpoint(path='res://scripts/player.gd', line=42)

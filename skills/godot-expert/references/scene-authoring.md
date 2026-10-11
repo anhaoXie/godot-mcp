@@ -94,7 +94,7 @@ node.position = Vector2(20, 50)    # GDScript
 
 Use when the editor is open and connected:
 
-```python
+```json
 {"command": "cmd_create_node", "params": {"parent_path": ".", "node_type": "CharacterBody2D", "name": "Player"}}
 {"command": "cmd_set_node_property", "params": {"node_path": "Player", "property": "collision_layer", "value": 1}}
 {"command": "cmd_attach_script", "params": {"node_path": "Player", "script_path": "res://scripts/player.gd"}}
@@ -150,7 +150,7 @@ As a child of the player, it automatically follows.
 ```
 
 Or via the bridge:
-```python
+```json
 {"command": "cmd_add_to_group", "params": {"node_path": "Player", "group": "player"}}
 ```
 

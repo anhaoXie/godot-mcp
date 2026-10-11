@@ -3,7 +3,7 @@ type: index
 title: "Verify your work"
 description: "The verification stack — what each check covers, what it misses, and the recommended full pattern."
 created: 2026-09-19
-updated: 2026-09-23
+updated: 2026-10-10
 ---
 
 # Verify your work
@@ -47,6 +47,8 @@ errors — then 2292 runtime errors appeared at first boot. The fixes:
   everything in the original report).
 
 ## The one-call diagnostics
+
+You: *"Run the full diagnostics on the main scene."* — the agent runs:
 
 ```
 godot_debug_workflow(scene='res://scenes/main.tscn', expected_timeout=false)

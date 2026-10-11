@@ -71,10 +71,10 @@ With a token (non-loopback / Docker):
 Any MCP client works the same way — the server speaks standard MCP over stdio
 or Streamable HTTP:
 
-- **Claude Code / Claude Desktop**: add the same `command` (or `url`) shape in
-  the client's MCP config.
-- **Programmatic (Python)**: the MCP SDK's stdio client spawns
-  `godot-editor-mcp` and speaks JSON-RPC over stdin/stdout.
+- **Any MCP client or agent harness**: register the server with the same
+  `command` (stdio) or `url` (HTTP) shape in its MCP config. godot-mcp speaks
+  standard MCP, so any client that drives MCP tools works — a coding agent, an
+  IDE assistant, or your own orchestrator.
 
 !!! note "Sessions are stateless"
     godot-mcp serves the sessionless MCP `2026-07-28` protocol shape: no
