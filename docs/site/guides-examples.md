@@ -75,24 +75,20 @@ then `godot_debugger_continue_execution()`. See
 
 ## How to use an example
 
-Open either project folder in Godot 4.4+ with the godot-mcp addon installed, or
-point your client's server at it — the same setup as any project
-([install the addon](getting-started-addon.md)). Then treat it as a target:
-orient (`godot_get_server_info`), enable a toolset, preview a mutation, apply,
-and verify — the rhythm from [Your first session](getting-started-first-session.md).
+Open either project folder in Godot 4.4+ with the godot-mcp addon installed, then treat it
+as a target. You prompt in plain language; the assistant makes the calls — the rhythm from
+[Your first session](getting-started-first-session.md).
 
-**Suggested first walk-throughs:**
+**A few first things to ask:**
 
-- **Read before you write** — `godot_inspection_get_scene_tree()`, then
-  `godot_inspection_get_node_properties(node_path="Player")` on the survivors
-  player; every path the tree shows is tool-ready.
-- **Preview a mutation** — `godot_scene_edit_set_node_property(node_path="Player",
-  property="speed", value=300, dry_run=true)`; the preview carries the same
-  persistence verdict the real run will.
-- **Break and step** — on `vampire`, trigger the debugger demo and read the
-  stack, exactly as in [Play-test & debug](guides-playtest-debug.md).
-- **Run the tests** — the survivors suite is a live GUT fixture for the
-  `testing` toolset, including the pass/fail parsing.
+- **"Read the scene before you change it."** — the assistant fetches the scene tree and the
+  survivors player's properties; every path it sees is call-ready.
+- **"Set the Player's speed to 300 — but preview it first."** — the preview carries the same
+  save verdict the real run will.
+- **"Break into the debugger and step through it."** — on `vampire`, trigger the debugger demo
+  and read the stack, exactly as in [Play-test & debug](guides-playtest-debug.md).
+- **"Run the survivors tests."** — the suite is a live GUT fixture for the `testing` toolset,
+  including the pass/fail parsing.
 
 ## Why these exist
 

@@ -163,16 +163,11 @@ descriptions, and input schemas
 ([#621](https://github.com/hybridindie/godot-mcp/issues/621)), so the agent can
 use them even when its registry never refreshes.
 
-## First call, sanity check
+## Sanity check
 
-Ask the agent to run:
-
-```
-godot_health_check()       # → { bridge_connected, version }
-godot_get_server_info()    # version, contract_version, toolsets, active scene, next_steps
-```
-
-`bridge_connected: true` means the editor addon is dialed in. If it's `false`:
-open Godot with the addon enabled, check the status dock, then re-run.
+Just ask your assistant, in plain language: *"is Godot connected, and what's available?"*
+It calls `godot_health_check` and `godot_get_server_info` for you — **you never type these
+yourself.** If it reports `bridge_connected: false`, open Godot with the addon enabled,
+check the status dock, then ask again.
 
 Next: [your first session](getting-started-first-session.md).
