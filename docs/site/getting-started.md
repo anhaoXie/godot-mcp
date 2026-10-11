@@ -21,7 +21,7 @@ You use an AI assistant (Claude, Codex, ChatGPT…) and would rather not touch a
 You're comfortable with installs and MCP. Four steps:
 
 1. **[Install the MCP server](getting-started-install.md)** — PyPI, Docker, or from source.
-2. **[Install the Godot addon](getting-started-addon.md)** — from the Godot Asset Library (**Godot Editor MCP - Addon**), or copy it in; then enable it.
+2. **[Install the Godot addon](getting-started-addon.md)** — from the [Godot Asset Store](https://store.godotengine.org/asset/john-d-studios/godot-editor-mcp-addon/) (**Godot Editor MCP - Addon**), or copy it in; then enable it.
 3. **[Configure your client](getting-started-clients.md)** — OpenCode, Claude, or any MCP host.
 4. **[Run your first session](getting-started-first-session.md)** — the orient → enable → preview → act → verify rhythm.
 

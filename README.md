@@ -68,7 +68,7 @@ curl -L -o godot_mcp_addon.zip \
 unzip godot_mcp_addon.zip -d /path/to/your/project/
 ```
 
-(Or install **Godot Editor MCP - Addon** from the Godot Asset Library.) A status dock appears in the editor; the addon connects out to the server's bridge (`ws://127.0.0.1:9080` by default) and reconnects automatically, so editor and server can start in either order.
+(Or install **Godot Editor MCP - Addon** from the [Godot Asset Store](https://store.godotengine.org/asset/john-d-studios/godot-editor-mcp-addon/).) A status dock appears in the editor; the addon connects out to the server's bridge (`ws://127.0.0.1:9080` by default) and reconnects automatically, so editor and server can start in either order.
 
 **3. Point your MCP client at it** — OpenCode (`opencode.json` in the project root):
 

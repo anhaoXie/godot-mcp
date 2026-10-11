@@ -46,7 +46,7 @@ A file-blind agent would just say *"done."* godot-mcp tells you **what will actu
 
 ## Start in about two minutes
 
-1. **Add the addon** to your Godot project and switch it on — *Project → Project Settings → Plugins → Godot Editor MCP - Addon*.
+1. **Add the addon** — install [Godot Editor MCP - Addon](https://store.godotengine.org/asset/john-d-studios/godot-editor-mcp-addon/) from the Godot Asset Store, then switch it on in *Project → Project Settings → Plugins*.
 2. **Point your AI assistant at it** with one line in its MCP config (for Claude Code: `claude mcp add godot -- uvx godot-editor-mcp`).
 3. **Tell it what you want** — *"add a player that jumps"*, *"make the jump feel snappier"*, *"why does it crash on start?"*.
 

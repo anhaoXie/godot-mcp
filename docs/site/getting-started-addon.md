@@ -20,11 +20,12 @@ The addon is the only part of the system that lives inside Godot. It is an
   node, recent command outcomes with timing)
 - registers the debugger plugin that powers live play-session inspection
 
-## Option A: Godot Asset Library (easiest)
+## Option A: Godot Asset Store (easiest)
 
-The addon is published to the Godot Asset Library as **Godot Editor MCP -
-Addon**. In Godot, open the **Asset Library** (the **AssetLib** tab), search for
-**Godot Editor MCP - Addon**, and **Install** it into your project.
+The addon is published as **Godot Editor MCP - Addon** on the
+[Godot Asset Store](https://store.godotengine.org/asset/john-d-studios/godot-editor-mcp-addon/).
+Install it into your project from there — or, inside Godot, open the **AssetLib**
+tab, search for **Godot Editor MCP - Addon**, and **Install**.
 
 ## Option B: copy into your own project (from source)
 
