@@ -60,7 +60,7 @@ AI client ──stdio / HTTP──▶ FastMCP server ──WebSocket──▶ Go
 pip install godot-editor-mcp      # or run without installing: uvx godot-editor-mcp
 ```
 
-**2. Install the Godot addon** into your project, then enable it in *Project → Project Settings → Plugins → Godot MCP*:
+**2. Install the Godot addon** into your project, then enable it in *Project → Project Settings → Plugins → Godot Editor MCP - Addon*:
 
 ```bash
 curl -L -o godot_mcp_addon.zip \

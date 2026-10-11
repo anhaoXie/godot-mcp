@@ -57,7 +57,7 @@ Set up godot-mcp for my Godot project so you can drive the editor.
    from https://github.com/hybridindie/godot-mcp/releases/latest and unzip it into my
    project folder (it adds `addons/godot_mcp/`).
 4. When that's done, tell me to enable the addon: in Godot, Project → Project Settings →
-   Plugins → enable "Godot MCP".
+   Plugins → enable "Godot Editor MCP - Addon".
 5. Once I confirm, verify the connection by calling `godot_health_check` and
    `godot_get_server_info`, and tell me the version it reports.
 
@@ -66,7 +66,7 @@ Ask me for my project folder path if you're not sure where it is.
 
 ## Step 3 — Enable the addon (the one click that's yours)
 
-In Godot: **Project → Project Settings → Plugins**, and switch on **Godot MCP**. A small
+In Godot: **Project → Project Settings → Plugins**, and switch on **Godot Editor MCP - Addon**. A small
 status dock appears at the bottom of the editor. When its dot turns **green**, the
 assistant is connected and ready.
 

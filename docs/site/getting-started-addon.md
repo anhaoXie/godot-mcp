@@ -41,7 +41,7 @@ testable.
 ---
 
 After installing by any method, enable the plugin: **Project Settings →
-Plugins → Godot MCP**. The addon checks the editor version on enable and warns
+Plugins → Godot Editor MCP - Addon**. The addon checks the editor version on enable and warns
 below 4.4.
 
 ## Point the addon at your server
