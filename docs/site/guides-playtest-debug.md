@@ -19,6 +19,12 @@ The `godot_*` blocks below are **under the hood** — your assistant issues thos
 
 ## Two run modes — pick the right one
 
+::: info Under the hood
+A **headless** run spawns a separate Godot process — a quick "does it even boot" smoke, no
+editor, no probe. A **live play session** drives the game *inside* the running editor, so
+you can inspect and steer it. The rest of this page is the live loop.
+:::
+
 | Mode | Toolset | Answers |
 |------|---------|---------|
 | Headless smoke test | `runtime` | "does it run at all" — no editor play session, no probe |

@@ -51,6 +51,11 @@ state between tests.
 
 ## CI-shaped verification loop
 
+::: info Under the hood
+Every step returns structured results an agent or a script can gate on — no human reading
+logs. The one-call `godot_debug_workflow()` collapses the first three.
+:::
+
 The full headless loop — no live editor, no probe:
 
 1. `godot_scripts_get_parse_errors` for every changed `.gd`

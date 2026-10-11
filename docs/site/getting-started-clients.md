@@ -3,7 +3,7 @@ type: index
 title: "Configure your MCP client"
 description: "Register godot-mcp in OpenCode, Claude, or any MCP host — stdio or HTTP."
 created: 2026-09-19
-updated: 2026-10-10
+updated: 2026-10-11
 ---
 
 # Configure your MCP client
@@ -114,6 +114,13 @@ first `tools/list`, so the toolsets are present from the start.
 :::
 
 ## Which clients refresh their tool list?
+
+::: info Under the hood
+On the sessionless `2026-07-28` protocol there's no standing server→client channel: a
+change notification reaches a client only if it opened a `subscriptions/listen` stream.
+Whether yours does is the reason this table exists — see
+[Toolset gating](architecture/gating.md) for the mechanism.
+:::
 
 Surveyed October 2026. **Supports** = receives the change and re-runs
 `tools/list` without a reconnect; **partial** = a mechanism exists but is

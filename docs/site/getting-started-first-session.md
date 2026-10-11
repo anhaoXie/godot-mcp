@@ -114,6 +114,12 @@ action.
 
 ## Reading the results the agent reports back
 
+::: info Under the hood
+These fields are the server's **honesty contract** — what a save will *really* keep, what a
+batch actually ran, whether a check raced a rescan. See
+[Persistence truth](architecture/persistence.md) for how they're produced.
+:::
+
 The agent's results carry **honesty fields** that read as ground truth — check
 them (or ask the agent to explain them):
 

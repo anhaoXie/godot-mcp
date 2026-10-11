@@ -3,7 +3,7 @@ type: index
 title: "Install the Godot addon"
 description: "Copy the addon into your project and enable it — the editor dials the server and reconnects on its own."
 created: 2026-09-19
-updated: 2026-10-10
+updated: 2026-10-11
 ---
 
 # Install the Godot addon
@@ -19,6 +19,12 @@ The addon is the only part of the system that lives inside Godot. It is an
 - shows a **read-only status dock** (connection state, project/scene/selected
   node, recent command outcomes with timing)
 - registers the debugger plugin that powers live play-session inspection
+
+::: info Under the hood
+The addon **dials out** to the server and reconnects, instead of hosting a server the MCP
+side connects to. The editor is the app that comes and goes, so this way launch order never
+matters. See [Bridge & transport](architecture/bridge.md).
+:::
 
 ## Option A: Godot Asset Store (easiest)
 
