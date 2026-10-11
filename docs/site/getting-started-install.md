@@ -8,6 +8,9 @@ updated: 2026-09-23
 
 # Install the MCP server
 
+!!! info "For readers who know MCP"
+    This is the manual / technical path. Rather not touch a terminal? → **[Set up with your AI agent](getting-started-with-an-agent.md)** has your assistant do it.
+
 ## Option A: PyPI (recommended)
 
 ```bash

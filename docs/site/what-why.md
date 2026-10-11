@@ -8,6 +8,9 @@ updated: 2026-09-23
 
 # What & why
 
+!!! info "For readers who know MCP"
+    This is the technical track. New here and just want to make a game? → **[Set up with your AI agent](getting-started-with-an-agent.md)**.
+
 ## The problem it solves
 
 An LLM agent can already edit Godot files on disk — but it edits **blind**:

@@ -123,6 +123,13 @@ export default withMermaid(defineConfig({
           { text: 'Ship: export, tests & CI', link: '/guides-ship' },
           { text: 'Examples', link: '/guides-examples' }
         ]
+      },
+      {
+        text: 'Project',
+        items: [
+          { text: 'Contributing', link: 'https://github.com/hybridindie/godot-mcp/blob/main/CONTRIBUTING.md' },
+          { text: 'GitHub', link: 'https://github.com/hybridindie/godot-mcp' }
+        ]
       }
     ],
     search: {

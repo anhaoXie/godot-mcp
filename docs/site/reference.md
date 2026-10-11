@@ -8,6 +8,9 @@ updated: 2026-09-23
 
 # Reference
 
+!!! info "For readers who know MCP"
+    This is the technical track. New here and just want to make a game? → **[Set up with your AI agent](getting-started-with-an-agent.md)**.
+
 Authoritative tables for the surface. The per-tool contract spec (full result
 schemas, every field) remains [`docs/tool-contracts.md`](https://github.com/hybridindie/godot-mcp/blob/main/docs/tool-contracts.md)
 in the repo — it is the source of truth; these pages are the readable map.

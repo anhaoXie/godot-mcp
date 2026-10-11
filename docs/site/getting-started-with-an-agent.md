@@ -70,6 +70,10 @@ In Godot: **Project → Project Settings → Plugins**, and switch on **Godot MC
 status dock appears at the bottom of the editor. When its dot turns **green**, the
 assistant is connected and ready.
 
+![The godot-mcp status dock: a green Connected dot, the Godot version and bridge URL, the active scene and selected node, the last undoable action, the enabled toolsets, and a recent-command log showing what the assistant has been doing.](/dock.svg)
+
+*A green dot means connected. The **recent-command log** at the bottom shows exactly what the assistant has been doing, and the **Last action** row is undoable with Ctrl+Z.*
+
 ## Step 4 — Check it worked
 
 Tell your assistant:
