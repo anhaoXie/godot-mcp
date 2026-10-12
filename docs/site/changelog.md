@@ -3,7 +3,7 @@ type: index
 title: "Changelog"
 description: "Release history for godot-mcp."
 created: 2026-09-19
-updated: 2026-10-10
+updated: 2026-10-12
 ---
 
 # Changelog
@@ -11,6 +11,27 @@ updated: 2026-10-10
 Full release notes live on
 [GitHub Releases](https://github.com/hybridindie/godot-mcp/releases). This page
 summarizes the recent ones.
+
+## 2026.10.12 — Version awareness, a resilient addon, and a friendlier site
+
+The server can now tell you when it — or the addon — is out of date, the addon can no longer
+silently drop an import, and the docs are rebuilt around getting you to a first working session
+fast. Surface: **194 tools** (one new). Additive — `contract_version` stays 1.
+
+- **Version drift & update check (#629)** — `godot_health_check` and `godot_get_server_info`
+  report the connected addon's version and flag a server↔addon mismatch; a new
+  `godot_check_for_updates` tool (opt-in via `GODOT_MCP_CHECK_UPDATES`, off by default — no
+  silent phone-home) reports whether a newer release exists, and a known update is surfaced in
+  `get_server_info` and the editor dock.
+- **Reliable asset import (#628)** — `godot_asset_import_asset` no longer silently drops its
+  filesystem scan when one is already in flight: the addon defers and re-issues it, so a
+  freshly copied asset actually imports (and reports `scan_deferred` when it queued one).
+- **The addon is "Godot Editor MCP - Addon"** — its in-editor plugin name and its Godot Asset
+  Store listing now match.
+- **A friendlier site** — a creator-first home, a getting-started path that leads with the
+  **skill** (so your assistant enables toolsets itself), and a clearer split between the
+  hands-on guides and the deep "Under the hood" reference. The `godot_*` calls are the
+  assistant's; the docs no longer ask you to type them.
 
 ## 2026.10.10 — Gating that works on the sessionless protocol
 
