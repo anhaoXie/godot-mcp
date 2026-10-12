@@ -3,7 +3,7 @@ type: index
 title: "Examples"
 description: "Two complete Godot games under examples/ — what they demonstrate, how to run them, and the MCP toolsets they exercise."
 created: 2026-09-30
-updated: 2026-10-10
+updated: 2026-10-12
 ---
 
 # Examples
@@ -38,21 +38,18 @@ scaling), projectiles (auto-fire at nearest enemy), XP gems (magnet pickup), a
 | Autoload game manager + state machine | `resources_edit`, `scripts` |
 | GUT unit tests (60) | `testing` |
 
-Run its tests — You: *"Run the survivors unit tests."* — the agent runs:
+Run its tests — You: *"Run the survivors unit tests."*
 
-```
-godot_testing_run_tests(test_dir="res://tests/unit")
-```
+The assistant runs the suite and reports the pass/fail counts (the `testing`
+toolset detects GUT automatically — `framework_absent: true` when it isn't
+installed).
 
-Or directly:
+Or run it yourself:
 
 ```bash
 godot --headless --path examples/survivors \
   -s addons/gut/gut_cmdln.gd -gexit
 ```
-
-The `testing` tool detects GUT automatically (`framework_absent: true` when it
-isn't installed).
 
 ## `examples/vampire/` — the comprehensive coverage demo
 

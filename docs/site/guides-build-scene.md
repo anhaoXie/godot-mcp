@@ -3,113 +3,88 @@ type: index
 title: "Build a scene"
 description: "Scaffold → nodes → script → collision → save, with previews and persistence verdicts at each step."
 created: 2026-09-19
-updated: 2026-10-11
+updated: 2026-10-12
 ---
 
 # Build a scene
 
-The canonical build loop, with the safety machinery visible at each step. You prompt in
-plain language; the assistant does the rest.
-
-::: info Under the hood
-The `godot_*` blocks below are **under the hood** — your assistant issues those calls,
-**you never type them.** They're shown so you can follow along and spot a stall.
-:::
+The canonical build loop. You prompt in plain language; the assistant makes the editor
+calls and hands you the honest verdicts.
 
 ## 1. Scaffold
 
-You: *"Scaffold a main scene."* — the agent runs:
+You: *"Scaffold a main scene."*
 
-```
-godot_enable_toolset('scene_edit')
-godot_scene_edit_create_scene(root_type="Node2D", scene_path="res://scenes/main.tscn")
-```
-
-`root_type` accepts **built-in ClassDB node types only** — a custom
-`class_name` script is refused (ClassDB can't instantiate script classes). To
-root a scene on a custom class: create with the base built-in type, then
-`attach_script` the root.
+The assistant enables scene editing and creates a root scene. The root must be a **built-in**
+node type (e.g. `Node2D`) — a custom `class_name` is refused, because the editor can't
+instantiate script classes. To root a scene on a custom class, have the assistant create it
+with the base built-in type, then attach the script to the root.
 
 ## 2. Compose the tree
 
-You: *"Add a Player with a visible Body shape."* — the agent runs:
+You: *"Add a Player with a visible Body shape."*
 
-```
-godot_scene_edit_create_node(parent_path=".", node_type="CharacterBody2D", node_name="Player")
-godot_scene_edit_create_node(parent_path="Player", node_type="Polygon2D", node_name="Body")
-godot_scene_edit_set_node_property(node_path="Player/Body", property="color", value="#88ffcc")
-```
-
-Efficiency lever: several independent operations in one round-trip via
-`godot_composite_run_commands` (the editor drains each command in ~one frame)
-or `godot_composite_batch_create_nodes` for many same-typed nodes.
+The assistant adds the nodes and sets their properties — node types, names, and values — all
+in your live scene. For several independent operations, ask it to **batch** them: many
+commands run in a single editor round-trip (the editor drains each in about a frame), which is
+far faster than one call per node.
 
 ## 3. Attach behavior
 
-You: *"Give the Player a movement script."* — the agent runs:
+You: *"Give the Player a movement script."*
 
-```
-godot_scripts_write(script_path="res://scripts/player.gd", content="extends CharacterBody2D\n…")
-godot_scene_edit_attach_script(node_path="Player", script_path="res://scripts/player.gd")
-```
-
-Script writes flush to disk immediately (no scene save needed); scene edits
-live in editor memory until `godot_scene_edit_save_scene()`.
+Script writes flush straight to disk (no scene save needed), so the assistant writes the
+script, attaches it, and the behavior is live in your editor immediately. Scene *edits*, by
+contrast, stay in the editor's memory until the scene is saved (step 5).
 
 ## 4. Physics
 
-You: *"Give the Player collision so it stands on floors."* — the agent runs:
+You: *"Give the Player collision so it stands on floors."*
+
+::: info Under the hood
+The assistant sets the collision shape, body, and layers. Godot types arrive as plain JSON —
+a `Vector2` size is `{"x": 32, "y": 48}`:
 
 ```
-godot_enable_toolset('physics')
 godot_physics_setup_collision(node_path="Player", shape_type="RectangleShape2D",
                               properties={"size": {"x": 32, "y": 48}})
-godot_physics_setup_body(node_path="Player", properties={"mass": 2.0})
-godot_physics_set_layers(node_path="Player", layers=[1], mask=[2])
 ```
+:::
 
-`setup_collision` dimension-checks the shape against the body up front — a 2D
-shape on a 3D body is refused with a naming hint instead of silently shipping
-collisionless levels.
+It dimension-checks the shape against the body up front — a 2D shape on a 3D body is refused
+with a naming hint, instead of silently shipping collisionless levels.
 
 ## 5. Verify, then save
 
-You: *"Check the script parses, then save the scene."* — the agent runs:
+You: *"Check the script parses, then save the scene."*
 
-```
-godot_scripts_get_parse_errors(script_path="res://scripts/player.gd")
-godot_scene_edit_save_scene()
-```
-
-Parse-clean is necessary, not sufficient — runtime API misuse needs the
-headless run (see [verify](guides-verify.md)).
+A clean parse is necessary but **not sufficient** — runtime API misuse only shows up when the
+game actually runs, so ask for a headless run too (see [Verify your work](guides-verify.md)).
+Then save.
 
 ## Reading the persistence verdicts
 
-Every mutation result carries `persisted`/`reason`/`hint`:
+Every mutation result carries a **persistence verdict** — whether the save will really keep
+the change:
 
 - `persisted: true` → the save keeps it.
-- `persisted: false, reason: instanced_child_not_editable` → the target is
-  inside an instanced scene. Fix: `godot_scene_edit_set_editable_children(node_path="Relic")`
-  (then re-apply), or retarget a node the scene owns.
-- `persisted: false, reason: node_not_owned` → the node has no owner (e.g.
-  added by a `@tool` script); re-create it through the tools so the owner lands.
-- Batch results: read `persistence[]` per target and `undoable`.
+- `persisted: false, reason: instanced_child_not_editable` → the target is inside an instanced
+  scene. Fix: ask the assistant to enable Editable Children on that scene (then re-apply), or
+  to target a node the scene owns.
+- `persisted: false, reason: node_not_owned` → the node has no owner (e.g. added by a `@tool`
+  script); re-create it through the tools so the owner lands.
+- Batch results: read `persistence[]` per target, and `undoable`.
 
 ## Groups & signals
 
-You: *"Put the Player in the `player` group and connect the Enemy's `died` signal."* — the agent runs:
+You: *"Put the Player in the `player` group and connect the Enemy's `died` signal."*
 
-```
-godot_scene_edit_add_to_group(node_path="Player", group="player")
-godot_scene_edit_connect_signal(source_path="Enemy", signal_name="died",
-                                target_path=".", method_name="_on_enemy_died")
-```
-
-Both are UndoRedo-wrapped; the signal connection reports `already_connected`
-instead of failing on a duplicate.
+Both are undoable, and a signal connection that already exists reports `already_connected`
+instead of failing on the duplicate.
 
 ## Undo
 
-`godot_undo()` steps back the last editor action. Large batches above 20 nodes
-bypass the undo stack (`undoable: false` in the result) — plan those.
+Ask the assistant to undo and it steps back the last editor action. Large batches above 20
+nodes bypass the undo stack (the result says `undoable: false`) — plan those.
+
+Next: [Play-test & debug](guides-playtest-debug.md), or [Verify your work](guides-verify.md).
