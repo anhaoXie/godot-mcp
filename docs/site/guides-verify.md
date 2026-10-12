@@ -45,16 +45,10 @@ documents its scope honestly — the runtime half is what actually caught everyt
 You: *"Run the full diagnostics on the main scene."*
 
 ::: info Under the hood
-The assistant runs one call and reads a fixed result shape:
-
-```
-godot_debug_workflow(scene='res://scenes/main.tscn', expected_timeout=false)
-```
-
-It returns `{bridge, scene_tree?, run?, parse{ok, errors, skipped_reason, rescan_pending},
-findings[], suggestions[]}`. The `findings` read as ground truth — `RUNTIME ERRORS: n`,
-`RUN TIMED OUT`, `NON-ZERO EXIT` (only for a real crash), `PARSE ERRORS: n`. For a game that
-legitimately runs until killed, tell the assistant the timeout is expected.
+The assistant runs one call that returns parse + tree + run + bridge together, plus a
+`findings` list that reads as ground truth — `RUNTIME ERRORS: n`, `RUN TIMED OUT`, `NON-ZERO
+EXIT` (only for a real crash), `PARSE ERRORS: n`. For a game that legitimately runs until
+killed, tell the assistant the timeout is expected.
 :::
 
 ## Honesty fields as verification

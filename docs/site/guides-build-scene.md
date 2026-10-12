@@ -41,18 +41,10 @@ contrast, stay in the editor's memory until the scene is saved (step 5).
 
 You: *"Give the Player collision so it stands on floors."*
 
-::: info Under the hood
 The assistant sets the collision shape, body, and layers. Godot types arrive as plain JSON —
-a `Vector2` size is `{"x": 32, "y": 48}`:
-
-```
-godot_physics_setup_collision(node_path="Player", shape_type="RectangleShape2D",
-                              properties={"size": {"x": 32, "y": 48}})
-```
-:::
-
-It dimension-checks the shape against the body up front — a 2D shape on a 3D body is refused
-with a naming hint, instead of silently shipping collisionless levels.
+a `Vector2` size is `{"x": 32, "y": 48}` — and it dimension-checks the shape against the body
+up front: a 2D shape on a 3D body is refused with a naming hint, instead of silently shipping
+collisionless levels.
 
 ## 5. Verify, then save
 
