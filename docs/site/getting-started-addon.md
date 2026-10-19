@@ -3,7 +3,7 @@ type: index
 title: "Install the Godot addon"
 description: "Copy the addon into your project and enable it — the editor dials the server and reconnects on its own."
 created: 2026-09-19
-updated: 2026-10-18
+updated: 2026-10-19
 ---
 
 # Install the Godot addon
@@ -50,6 +50,24 @@ testable.
 After installing by any method, enable the plugin: **Project Settings →
 Plugins → Godot Editor MCP - Addon**. The addon checks the editor version on enable and warns
 below 4.4.
+
+::: warning A project created in the Project Manager starts without the addon
+The addon is **per project** (`res://addons/godot_mcp/`), and Godot's Project
+Manager creates an empty project. Nothing is installed yet — do Option A or B
+above first, then enable it.
+
+Enabling writes `[editor_plugins]` into `project.godot`, and Godot reads that
+list when the editor **opens**:
+
+- enabling from the **Plugins** dialog takes effect immediately in the running
+  editor;
+- enabling by **editing `project.godot`** — what a setup script does — does not.
+  The plugin appears only after that project is reopened.
+
+So if your automation copied the addon in and the MCP dock is still missing,
+reopen the project before debugging anything else. A running editor that never
+reloaded its plugin list looks exactly like a broken install.
+:::
 
 ## Point the addon at your server
 

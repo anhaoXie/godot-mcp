@@ -3,7 +3,7 @@ type: index
 title: "Value shapes"
 description: "How Godot types (Vector2/3, Color, Rect2, NodePath) arrive as JSON — and how they are coerced back."
 created: 2026-09-19
-updated: 2026-09-23
+updated: 2026-10-19
 ---
 
 # Value shapes
@@ -68,6 +68,27 @@ fails with a structured `VALIDATION_ERROR` naming the expected type. A value the
 engine silently ignores (an unsupported type, a dimension mismatch) can no
 longer come back as the *old* value under `set: true` (#641). Group / category /
 subgroup headings are rejected as properties (they have no backing storage).
+
+### Read-back verification is exact for vectors
+
+`Coerce.values_equal` applies its `1e-5` tolerance to `float`, `Dictionary` and
+`Array`. Every other type — `Vector2`, `Vector3`, `Vector4`, `Color`, `Rect2`
+included — falls through to Godot's exact `==`.
+
+That shows up whenever a value survives a unit round-trip. `rotation_degrees` is
+the usual one: `-35` is stored in radians, and reading it back as degrees lands
+on `-34.999996`. The write **succeeded** — the property holds the value you asked
+for — but the comparison fails and the tool reports
+
+```
+VALIDATION_ERROR: rotation_degrees expected -35, got -34.999996
+```
+
+Treat that as a reporting artifact rather than a rejected write: confirm with
+`godot_inspection_get_node_property` (or by reading the `.tscn`) before retrying,
+because sending the same value again fails the same way. When a scene needs
+several awkward rotations, set them from a script's `_ready()` instead of
+through a batch.
 
 ## Coercion rules the addon follows
 
