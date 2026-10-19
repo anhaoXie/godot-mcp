@@ -34,6 +34,11 @@ from mcp_server.models.envelope import CommandEnvelope, ErrorCode, ResponseEnvel
 
 logger = logging.getLogger(__name__)
 
+# #702: a replaced editor probes this path before reconnecting. The probe is
+# refused with "busy" while another editor owns the bridge, so a replaced
+# editor never displaces a healthy peer just to test it.
+PROBE_PATH = "/probe"
+
 
 class Connection(Protocol):
     """The minimal transport the bridge needs (an accepted WebSocket peer)."""
@@ -271,6 +276,41 @@ class Bridge:
     async def _handle_peer(self, conn: Connection) -> None:
         """Per-connection handler for the real listener: adopt the peer and stay until it
         disconnects, so ``websockets`` keeps the connection open for the read loop."""
+        # #702: the replaced-editor probe path never displaces the active peer.
+        # A real websockets peer exposes ``request.path``; fakes may expose
+        # ``path`` directly.
+        request = getattr(conn, "request", None)
+        path = str(getattr(request, "path", "") or getattr(conn, "path", ""))
+        if path.split("?", 1)[0].rstrip("/") == PROBE_PATH:
+            await self._handle_probe(conn)
+            return
+        reader = await self._attach(conn)
+        if reader is not None:
+            await reader
+
+    async def _handle_probe(self, conn: Connection) -> None:
+        """Answer a replaced editor's bridge-availability probe (#702).
+
+        Busy: answer ``{ok: true, busy: true}`` and close without touching the
+        active peer. Free: answer ``busy: false`` and adopt the SAME connection,
+        so there is no close/reconnect race that could let another editor slip
+        in between the probe and the real connection.
+        """
+        if self._conn is not None:
+            with suppress(Exception):
+                await conn.send(json.dumps({"ok": True, "busy": True}))
+            # The active peer can disconnect between the check and the close.
+            # Give that a moment to land, then adopt this probe if the bridge
+            # just became free (the addon waits for either busy:false or close).
+            await asyncio.sleep(0.05)
+            if self._conn is not None:
+                await conn.close()
+                return
+            with suppress(Exception):
+                await conn.send(json.dumps({"ok": True, "busy": False}))
+        else:
+            with suppress(Exception):
+                await conn.send(json.dumps({"ok": True, "busy": False}))
         reader = await self._attach(conn)
         if reader is not None:
             await reader
