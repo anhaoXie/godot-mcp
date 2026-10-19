@@ -135,11 +135,15 @@ Results carry structured self-reporting that reads as ground truth:
 
 ### 6. Contract versioning
 
-`godot_get_server_info` carries `contract_version` (a breaking-change counter,
-currently **1**) and `min_compatible_contract`. A client is compatible when
-`min ≤ client ≤ contract`. Additive changes (new tools, optional fields) never
-bump it; removals and renames do. The CalVer build version (`2026.10.15`) moves
-every release and is *not* the compatibility signal.
+The **contract** is the stable public surface a client builds against — tool names and
+parameters, result fields, value shapes, the envelope, errors, and safety semantics.
+`godot_get_server_info` carries `contract_version` (a breaking-change counter, currently
+**1**) and `min_compatible_contract`. A client is compatible when
+`min ≤ client ≤ contract`. Additive changes (new tools, optional fields) never bump it;
+removals and renames do. The CalVer build version (`2026.10.15`) moves every release and
+is *not* the compatibility signal.
+
+Full explainer: **[The compatibility contract](reference-contract.md)**.
 
 ---
 

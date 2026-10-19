@@ -79,6 +79,7 @@ const SECTIONS = [
     name: 'Reference',
     sources: [
       'reference.md',
+      'reference-contract.md',
       'reference-toolsets.md',
       'reference-safety-classes.md',
       'reference-value-shapes.md',

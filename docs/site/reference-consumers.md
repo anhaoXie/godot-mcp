@@ -20,7 +20,7 @@ A consumer pins four things (all versioned, all additive since contract 1):
 | Tool names + param keys | `_TOOL_NAMES` in the consumer's MCP client | mirror verbatim; tool-accuracy evals double as contract checks |
 | Toolset categories | `enable_toolset(category)` before gated calls | server-global set — a grant survives reconnects |
 | Envelope/result shapes | normalized `MCPResult(ok, data, error, required)` | `structuredContent` preferred when present |
-| Contract version | `godot_get_server_info.contract_version` | client compatible when `min ≤ client ≤ contract` |
+| Contract version | `godot_get_server_info.contract_version` | client compatible when `min ≤ client ≤ contract` — see [The compatibility contract](reference-contract.md) |
 
 ## The companion skills (in this repo)
 
@@ -67,7 +67,8 @@ The recommended shape for a game-specific consumer:
 3. **Add your own prompts/skills** — the recipe templates here
    ([prompts](reference-prompts.md)) are the pattern; your game's versions
    compose the same generic tools in game-shaped orders.
-4. **Pin the contract** — assert `contract_version` at startup; the additive
-   guarantee means unknown fields are safe to ignore.
+4. **Pin the contract** — assert `min_compatible_contract ≤ your_contract ≤ contract_version`
+   at startup; the additive guarantee means unknown fields are safe to ignore. See
+   [The compatibility contract](reference-contract.md).
 5. **Eval the behavior** — the tool-accuracy eval pattern (score calls against
    an `expected_tools` spec) doubles as drift detection.

@@ -16,6 +16,7 @@ Authoritative tables for the surface. The per-tool contract spec (full result
 schemas, every field) remains [`docs/tool-contracts.md`](https://github.com/hybridindie/godot-mcp/blob/main/docs/tool-contracts.md)
 in the repo — it is the source of truth; these pages are the readable map.
 
+- [The compatibility contract](reference-contract.md) — what the contract covers, why it is versioned, and how negotiation works
 - [Toolsets & tools](reference-toolsets.md) — every toolset, every tool
 - [Safety classes](reference-safety-classes.md) — class × tool matrix, `dry_run`/`confirm` semantics
 - [Value shapes](reference-value-shapes.md) — how Godot types arrive as JSON

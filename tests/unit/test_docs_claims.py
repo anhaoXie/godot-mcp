@@ -13,6 +13,7 @@ from pathlib import Path
 
 from fastmcp import Client
 
+from mcp_server import CONTRACT_VERSION, MIN_COMPATIBLE_CONTRACT
 from mcp_server.server import create_server
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -124,3 +125,37 @@ def test_examples_claim_matches_the_survivors_project() -> None:
     )
     assert int(claim.group(1)) == tests
     assert int(claim.group(2)) == len(files)
+
+
+def test_contract_page_is_linked_and_pins_the_live_values() -> None:
+    """The dedicated contract page must exist, be discoverable, and not drift."""
+    page = (SITE / "reference-contract.md").read_text(encoding="utf-8")
+    assert f"contract_version = {CONTRACT_VERSION}" in page
+    assert f"min_compatible_contract = {MIN_COMPATIBLE_CONTRACT}" in page
+
+    for source, needle in {
+        "reference.md": "reference-contract.md",
+        "concepts.md": "reference-contract.md",
+        "for-developers.md": "reference-contract.md",
+        "reference-consumers.md": "reference-contract.md",
+        ".vitepress/config.mts": "/reference-contract",
+        "llms-gen.mjs": "reference-contract.md",
+    }.items():
+        text = (SITE / source).read_text(encoding="utf-8")
+        assert needle in text, f"{source} does not link the contract page"
+
+    for heading in (
+        "What the contract covers",
+        "What the contract does not cover",
+        "Why it has its own version",
+        "How negotiation works",
+        "What bumps the contract",
+    ):
+        assert heading in page, f"contract page is missing: {heading}"
+
+
+def test_canonical_contract_wording_is_not_reversed() -> None:
+    """Below the floor means the client is too old, not too new."""
+    contracts = (REPO_ROOT / "docs" / "tool-contracts.md").read_text(encoding="utf-8")
+    assert "Below the floor, the client is too **old**" in contracts
+    assert "Below the floor, the client is too new" not in contracts

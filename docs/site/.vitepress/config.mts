@@ -93,6 +93,7 @@ export default withMermaid(defineConfig({
           { text: 'Configure your MCP client', link: '/getting-started-clients' },
           { text: 'Remote & multi-client', link: '/getting-started-openwebui' },
           { text: 'Concepts', link: '/concepts' },
+          { text: 'The compatibility contract', link: '/reference-contract' },
           { text: 'Reference overview', link: '/reference' },
           { text: 'Toolsets & tools', link: '/reference-toolsets' },
           { text: 'Safety classes', link: '/reference-safety-classes' },

@@ -1371,10 +1371,19 @@ Script `class_name` globals are not in ClassDB — an unknown class returns
 
 #### Contract / compatibility versioning (issue #196)
 
-`godot_get_server_info` carries two integers — `contract_version` and `min_compatible_contract` — that let a consuming client (e.g. [godot-agents](https://github.com/hybridindie/godot-agents)) negotiate compatibility against the **tool/envelope contract**, independent of the model layer.
+The **contract** is the stable public surface a client builds against: tool names and
+parameters, result fields and their meaning, value shapes, the bridge envelope, the error
+enum, safety semantics, and toolset categories. “Contract tests” pin that surface;
+`contract_version` is the compatibility counter for the guarantees they protect.
+
+`godot_get_server_info` carries two integers — `contract_version` and
+`min_compatible_contract` — that let a consuming client (e.g.
+[godot-agents](https://github.com/hybridindie/godot-agents)) negotiate compatibility
+against that surface, independent of the build and model layers. The site has the full
+explainer: [The compatibility contract](https://hybridindie.github.io/godot-mcp/reference-contract.html).
 
 - **`version`** is CalVer (`YYYY.MM.DD[-N]`) — the *build*. It moves on every release, including additive and internal changes, so it cannot tell a client whether a change was breaking.
-- **`contract_version`** is a monotonic integer — the *contract*. It is bumped **only on a breaking change** to the surface clients depend on: a removed or renamed tool, a changed/removed required parameter, a changed result-model field, or a bridge-envelope shape change. **Additive, backward-compatible changes do not bump it** (new tools, new toolsets, new *optional* fields, new error codes).
+- **`contract_version`** is a monotonic integer — the *contract*. It is bumped **only on a breaking change** to the surface clients depend on: a removed or renamed tool, a changed/removed required parameter, a changed result-model field, a changed bridge-envelope shape, a changed existing-error-code meaning, or a changed safety class / `dry_run` / `confirm` requirement. **Additive, backward-compatible changes do not bump it** (new tools, toolsets, prompts, resources, *optional* fields, or new error codes).
 - **`min_compatible_contract`** is the oldest client contract this server still serves.
 
 A client carries the `contract_version` it was built against and is compatible when:
@@ -1383,7 +1392,13 @@ A client carries the `contract_version` it was built against and is compatible w
 min_compatible_contract  ≤  client_contract  ≤  contract_version
 ```
 
-Below the floor, the client is too new for an old server (it may rely on contract behavior the server lacks); above the ceiling cannot occur for a faithful client. CalVer remains a usable coarse signal (and is what godot-agents pins today), but `contract_version` is the stable thing to gate on as the surface evolves. Bumping `CONTRACT_VERSION` (in `mcp_server/__init__.py`) is a deliberate, documented act — record the breaking change in the PR and, when the floor moves, `MIN_COMPATIBLE_CONTRACT` too.
+Below the floor, the client is too **old** — the server no longer serves that contract.
+Above the ceiling, the client is too **new** — it expects behavior the server does not
+have. Both are incompatible; inside the range the additive guarantee applies. CalVer
+remains a usable coarse signal (and is what godot-agents pins today), but
+`contract_version` is the stable thing to gate on as the surface evolves. Bumping
+`CONTRACT_VERSION` (in `mcp_server/__init__.py`) is a deliberate, documented act — record
+the breaking change in the PR and, when the floor moves, `MIN_COMPATIBLE_CONTRACT` too.
 
 #### Safety introspection (issue #14) — `read_only`
 

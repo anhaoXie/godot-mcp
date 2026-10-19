@@ -40,6 +40,8 @@ AI client ──stdio / HTTP──▶ FastMCP server ──WebSocket──▶ Go
 
 - **[Concepts](concepts.md)** — the mental model: editor-first, toolsets, safety classes,
   the envelope, honesty fields.
+- **[The compatibility contract](reference-contract.md)** — what the contract is, why it
+  has its own version, and how to negotiate it at startup.
 - **[Reference](reference.md)** — the readable map of the surface.
 - **[Toolsets & tools](reference-toolsets.md)** — every tool and its safety class.
 - **[Safety classes](reference-safety-classes.md)** — `dry_run` / `confirm` semantics.
