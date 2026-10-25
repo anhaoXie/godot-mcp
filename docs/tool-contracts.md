@@ -307,6 +307,10 @@ single-use; `CONSENT_MISMATCH` carries a `next_call` to `godot_describe_tool`.
 Without a webhook, `confirm=True` remains the accident guard, and the elicitation
 guard is the approval.
 
+| Tool | Params | Returns | Class |
+|------|--------|---------|-------|
+| `godot_describe_tool` | `tool, args=None` | `ConsentToken { tool, consent_required, token?, expires_at?, hint? }` | `read_only` |
+
 ### Preconditions
 
 Checked before any side effect. Each is a function in `safety.py` that raises a typed
@@ -445,11 +449,11 @@ UndoRedo-wrapped `cmd_*` handler and runs preconditions first.
 | `godot_scene_edit_delete_node` | `node_path, confirm=False` | `DeleteNodeResult { node_path, deleted, persisted, reason?, hint? }` | **`destructive`** |
 | `godot_scene_edit_attach_script` | `node_path, script_path` | `AttachScriptResult { node_path, script_path, attached }` | `mutating` |
 | `godot_scene_edit_connect_signal` | `source_path, signal_name, target_path, method_name` | `ConnectSignalResult { …, connected }` | `mutating` |
- | `godot_scene_edit_save_scene` | — | `SaveSceneResult { path?, saved }` | `mutating` |
- | `godot_scene_edit_create_scene` | `root_type, scene_path` | `CreateSceneResult { scene_path, root_type, created }` | `mutating` |
- | `godot_scene_edit_instance_scene` | `parent_path, scene_path, name=""` | `InstanceSceneResult { node_path, scene_path, instanced, persisted, reason?, hint? }` | `mutating` |
- | `godot_scene_edit_extract_scene` | `node_path, scene_path, replace_with_instance=False, save_current=False` | `ExtractSceneResult { node_path, scene_path, extracted, replaced, saved, node_count, instance_path?, persisted, reason?, hint? }` | `mutating` |
- | `godot_scene_edit_set_editable_children` | `node_path, editable=True` | `SetEditableChildrenResult { node_path, editable, persisted, reason?, hint? }` | `mutating` |
+| `godot_scene_edit_save_scene` | — | `SaveSceneResult { path?, saved }` | `mutating` |
+| `godot_scene_edit_create_scene` | `root_type, scene_path` | `CreateSceneResult { scene_path, root_type, created }` | `mutating` |
+| `godot_scene_edit_instance_scene` | `parent_path, scene_path, name=""` | `InstanceSceneResult { node_path, scene_path, instanced, persisted, reason?, hint? }` | `mutating` |
+| `godot_scene_edit_extract_scene` | `node_path, scene_path, replace_with_instance=False, save_current=False` | `ExtractSceneResult { node_path, scene_path, extracted, replaced, saved, node_count, instance_path?, persisted, reason?, hint? }` | `mutating` |
+| `godot_scene_edit_set_editable_children` | `node_path, editable=True` | `SetEditableChildrenResult { node_path, editable, persisted, reason?, hint? }` | `mutating` |
 
 `godot_scene_edit_set_editable_children` toggles Editable Children on an instanced
 scene (#487) — the action the persistence verdicts name when they report
@@ -498,7 +502,8 @@ Node parity (issue #31), also in `scene_edit`:
 |------|--------|---------|-------|
 | `godot_scene_edit_duplicate_node` | `node_path` | `DuplicateNodeResult { node_path, source_path, persisted, reason?, hint? }` | `mutating` |
 | `godot_scene_edit_move_node` | `node_path, new_parent_path, index=-1` | `MoveNodeResult { node_path, moved, persisted, reason?, hint? }` | `mutating` |
-| `godot_scene_edit_add_to_group` / `godot_scene_edit_remove_from_group` | `node_path, group` | `GroupResult { node_path, group, in_group, changed }` | `mutating` |
+| `godot_scene_edit_add_to_group` | `node_path, group` | `GroupResult { node_path, group, in_group, changed }` | `mutating` |
+| `godot_scene_edit_remove_from_group` | `node_path, group` | `GroupResult { node_path, group, in_group, changed }` | `mutating` |
 | `godot_scene_edit_list_signal_connections` | `node_path` | `SignalConnectionList { node_path, connections: [{signal, target_path, method, persistent}] }` | `read_only` |
 | `godot_scene_edit_disconnect_signal` | `source_path, signal_name, target_path, method_name, confirm=False, dry_run=False` | `DisconnectSignalResult { …, disconnected }` | `destructive` |
 
